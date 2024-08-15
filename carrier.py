@@ -2,34 +2,47 @@
 import numpy 
 import random
 
-OCEANSIZE = 100
-ISLANDS = 50
-ISLAND_MAX_SIZE = 5
-ISLAND_MIN_SIZE = 1
-
-def place_islands(oceanmap):
-    for x in range(50):
-        xlocation_center = random.randint(1,OCEANSIZE)
-        ylocation_center = random.randint(1,OCEANSIZE)
-        size = random.randint(1, 5)
+def place_islands(OCEANSIZE, ISLANDS, ISLANDS_MINSIZE, ISLANDS_MAXSIZE, oceanmap):
+    for x in range(ISLANDS):
+        xlocation_center = random.randint(0,OCEANSIZE-1)
+        ylocation_center = random.randint(0,OCEANSIZE-1)
+        size = random.randint(ISLANDS_MINSIZE, ISLANDS_MAXSIZE)
         oceanmap[xlocation_center][ylocation_center] = 1
         if xlocation_center - size < 0:
             xlocation_start = 0
         else:
-            xlocation_start - size
+            xlocation_start = xlocation_center - size
         if ylocation_center - size < 0:
             ylocation_start = 0
         else:
-            ylocation_start - size
+            ylocation_start = ylocation_center - size
         for x in range(size):
             for y in range(size):
                 oceanmap[xlocation_start+x][ylocation_start+y] = 1
     return oceanmap
 
 
-def generate_empty_ocean_map():
+def write_human_map(oceanmap, filename, OCEANSIZE):
+    map_file = open(filename, "w")
+    for y in range(OCEANSIZE):
+        for x in range(OCEANSIZE):
+            if oceanmap[x][y] == 0:
+                map_file.write("-")
+            elif oceanmap[x][y] == 1:
+                map_file.write("#")
+        map_file.write("\n")
+    map_file.close()
+
+def generate_empty_ocean_map(OCEANSIZE):
     return numpy.zeros((OCEANSIZE, OCEANSIZE))
 
 def main_game():
-    oceanmap = generate_empty_ocean_map()
-    place_islands(oceanmap)
+    OCEANSIZE = 100
+    ISLANDS = 50
+    ISLAND_MIN_SIZE = 1
+    ISLAND_MAX_SIZE = 5
+    oceanmap = generate_empty_ocean_map(OCEANSIZE)
+    oceanmap = place_islands(OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE, oceanmap)
+    write_human_map(oceanmap, "oceanmap.txt", OCEANSIZE)
+
+main_game()
