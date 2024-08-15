@@ -37,12 +37,12 @@ def generate_empty_ocean_map(OCEANSIZE):
     return numpy.zeros((OCEANSIZE, OCEANSIZE))
 
 def main_game():
-    OCEANSIZE = 100
-    ISLANDS = 50
-    ISLAND_MIN_SIZE = 1
-    ISLAND_MAX_SIZE = 5
+    OCEANSIZE = 100 # Size of the map
+    ISLANDS = 50 # Number of islands
+    ISLAND_MIN_SIZE = 1 # Island maximum size in pixels
+    ISLAND_MAX_SIZE = 5 # Island maximum size in pixels
     oceanmap = generate_empty_ocean_map(OCEANSIZE)
     oceanmap = place_islands(OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE, oceanmap)
     write_human_map(oceanmap, "oceanmap.txt", OCEANSIZE)
 
-main_game()
+main_game() # Run main game function
