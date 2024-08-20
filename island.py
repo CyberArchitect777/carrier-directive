@@ -3,30 +3,34 @@ import random
 
 class Island():
     def __init__(self):
-        self.xstartlocation = 0;
-        self.ystartlocation = 0;
-        self.size = 0;
+        self.xstartlocation = 0
+        self.ystartlocation = 0
+        self.size = 0
 
     def generate_random_island(self, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
-        flag = True
+        flag = False
         self.size = random.randint(ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
         while (flag == False):
             self.xstartlocation = random.randint(0,OCEANSIZE-1)
             self.ystartlocation = random.randint(0,OCEANSIZE-1)
-            if (self.xstartlocation + self.size) > OCEANSIZE:
-                flag == False
-            if (self.ystartlocation + self.size) > OCEANSIZE:
-                flag == False
+            if (self.xstartlocation + self.size) < OCEANSIZE:
+                if (self.ystartlocation + self.size) < OCEANSIZE:
+                    print("Random island start x - " + str(self.xstartlocation))
+                    print("Random island start y - " + str(self.ystartlocation))
+                    print("Random island size = " + str(self.size))
+                    flag = True
     
     def provide_coords(self):
         island_coords = []
         for y in range(self.size):
             for x in range(self.size):
-                island_coords.append(str(self.xstartlocation) + "," + str(self.ystartlocation))
+                island_coords.append(str(self.xstartlocation+x) + "," + str(self.ystartlocation+y))
         return island_coords
 
     def contains_duplicate_coords(self, selected_island):
-        if (list(set(selected_island.provide_coords()).intersection(self.provide_coords())) == ""):
+        compare_island_space = set(selected_island.provide_coords()).intersection(self.provide_coords())
+        print("Set length: " + str(len(compare_island_space)))
+        if len(compare_island_space) == 0:
             return False
         else:
             return True

@@ -5,7 +5,6 @@ from islands import *
 class Map():
     def __init__(self, OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
         self.islands_list = Islands(OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
-        print(self.islands_list.return_islands_list())
         self.OCEANSIZE = OCEANSIZE
 
     def write_basic_island_map(self):

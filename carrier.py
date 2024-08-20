@@ -3,8 +3,8 @@ from map import *
 
 OCEANSIZE = 100
 ISLANDS = 50
-ISLAND_MIN_SIZE = 1
-ISLAND_MAX_SIZE = 5
+ISLAND_MIN_SIZE = 2
+ISLAND_MAX_SIZE = 6
 
 new_game = Map(OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
 new_game.write_basic_island_map()
