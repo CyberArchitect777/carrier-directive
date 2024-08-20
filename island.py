@@ -10,7 +10,7 @@ class Island():
     def generate_random_island(self, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
         flag = False
         self.size = random.randint(ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
-        while (flag == False):
+        while (flag == False): # Generate the island coordinates until one is chosen that is within the map boundaries
             self.xstartlocation = random.randint(0,OCEANSIZE-1)
             self.ystartlocation = random.randint(0,OCEANSIZE-1)
             if (self.xstartlocation + self.size) < OCEANSIZE:
@@ -21,6 +21,9 @@ class Island():
                     flag = True
     
     def provide_coords(self):
+        """
+        Provide a total list of coordinates in which this island exists
+        """
         island_coords = []
         for y in range(self.size):
             for x in range(self.size):
@@ -28,6 +31,9 @@ class Island():
         return island_coords
 
     def contains_duplicate_coords(self, selected_island):
+        """
+        Compare another island to this one to see if any coordinates are shared
+        """
         compare_island_space = set(selected_island.provide_coords()).intersection(self.provide_coords())
         print("Set length: " + str(len(compare_island_space)))
         if len(compare_island_space) == 0:

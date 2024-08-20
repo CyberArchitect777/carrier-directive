@@ -8,6 +8,9 @@ class Map():
         self.OCEANSIZE = OCEANSIZE
 
     def write_basic_island_map(self):
+        """
+        Writes a basic ASCII-art map in text format to the file basicmap.txt
+        """
         map_data = numpy.zeros((self.OCEANSIZE, self.OCEANSIZE))
         for island in self.islands_list.return_islands_list():
             island_full_coords = island.provide_coords()
