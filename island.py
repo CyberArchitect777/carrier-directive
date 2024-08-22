@@ -3,14 +3,18 @@ import random
 
 class Island():
     def __init__(self):
-        self.xstartlocation = 0
-        self.ystartlocation = 0
-        self.size = 0
+        self.island_owner = 0 # Island owner, 0 = Nobody, 1 = Player, 2 = AI
+        # Starts with no information until generated
+        self.island_id = -1
+        self.xstartlocation = -1
+        self.ystartlocation = -1
+        self.size = -1
 
-    def generate_random_island(self, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
+    def generate_random_island(self, island_number, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
         flag = False
         self.size = random.randint(ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
         while (flag == False): # Generate the island coordinates until one is chosen that is within the map boundaries
+            self.island_id = island_number
             self.xstartlocation = random.randint(0,OCEANSIZE-1)
             self.ystartlocation = random.randint(0,OCEANSIZE-1)
             if (self.xstartlocation + self.size) < OCEANSIZE:
