@@ -12,7 +12,7 @@ class Islands():
 
         while islandNumber < ISLANDS:
             current_island = Island()
-            current_island.generate_random_island(OCEANSIZE, islandNumber, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
+            current_island.generate_random_island(islandNumber, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
             if self.checkduplicate(current_island) == False: # Generate a new island until the coordinates are in empty map on the map
                 self.islands_list.append(current_island)
                 islandNumber += 1
