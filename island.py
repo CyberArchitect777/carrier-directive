@@ -3,12 +3,12 @@ import random
 
 class Island():
     """
-        Class representing a single island in the game.
+    Class representing a single island in the game.
     
     """
     def __init__(self):
         """
-            Sets up the variables on a new island with placeholder values.
+        Sets up the variables on a new island with placeholder values.
         """
         self.island_owner = 0 # Island owner, 0 = Nobody, 1 = Player, 2 = AI
         # Starts with no information until generated
@@ -19,7 +19,7 @@ class Island():
 
     def generate_random_island(self, island_number, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
         """
-            Creates a random island and ensure it fits on the map
+        Creates a random island and ensure it fits on the map
         """
         flag = False
         self.size = random.randint(ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
@@ -43,6 +43,16 @@ class Island():
             for x in range(self.size):
                 island_coords.append(str(self.xstartlocation+x) + "," + str(self.ystartlocation+y))
         return island_coords
+    
+    def does_island_exist_here(self, x_pos, y_pos):
+        """
+        Checks to see if any part of the island exists at the provided coordinates
+        """
+        for location in self.provided_coords():
+            x_location, y_location = location.split(",")
+            if (x_pos == x_location) and (y_pos == y_location):
+                return True
+        return False
 
     def contains_duplicate_coords(self, selected_island):
         """
