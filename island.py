@@ -2,7 +2,14 @@
 import random
 
 class Island():
+    """
+        Class representing a single island in the game.
+    
+    """
     def __init__(self):
+        """
+            Sets up the variables on a new island with placeholder values.
+        """
         self.island_owner = 0 # Island owner, 0 = Nobody, 1 = Player, 2 = AI
         # Starts with no information until generated
         self.island_id = -1
@@ -11,13 +18,16 @@ class Island():
         self.size = -1
 
     def generate_random_island(self, island_number, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
+        """
+            Creates a random island and ensure it fits on the map
+        """
         flag = False
         self.size = random.randint(ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
         while (flag == False): # Generate the island coordinates until one is chosen that is within the map boundaries
             self.island_id = island_number
             self.xstartlocation = random.randint(0,OCEANSIZE-1)
             self.ystartlocation = random.randint(0,OCEANSIZE-1)
-            if (self.xstartlocation + self.size) < OCEANSIZE:
+            if (self.xstartlocation + self.size) < OCEANSIZE: # Checks to see if the generation does not go off the side of the map.
                 if (self.ystartlocation + self.size) < OCEANSIZE:
                     print("Random island start x - " + str(self.xstartlocation))
                     print("Random island start y - " + str(self.ystartlocation))

@@ -13,7 +13,7 @@ class Islands():
         while islandNumber < ISLANDS:
             current_island = Island()
             current_island.generate_random_island(islandNumber, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
-            if self.checkduplicate(current_island) == False: # Generate a new island until the coordinates are in empty map on the map
+            if self.checkduplicate(current_island) == False: # Generates a new island constantly until the coordinates are in an empty area on the map
                 self.islands_list.append(current_island)
                 islandNumber += 1
                 print("Generating island " + str(islandNumber))
@@ -28,4 +28,7 @@ class Islands():
         return False
 
     def return_islands_list(self):
+        """
+            returns the full list of island objects
+        """
         return self.islands_list

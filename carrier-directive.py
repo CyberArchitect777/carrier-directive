@@ -1,6 +1,10 @@
 
 from map import *
 
+"""
+    Main class for starting the game Carrier Directive.
+"""
+
 OCEANSIZE = 100 # Size of the game map
 ISLANDS = 50 # Number of islands to be generated
 ISLAND_MIN_SIZE = 2 # Minimum size of the island in both x and y directions
