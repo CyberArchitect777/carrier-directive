@@ -11,4 +11,9 @@ class Carriers():
         """
         self.carriers_list = [] # The carriers storage list
 
+    def add_carrier(self, owner, xlocation, ylocation):
+        """ 
+        Add a fresh carrier object to the carriers list
+        """
+        self.carriers_list.append(Carrier(owner, xlocation, ylocation))
     

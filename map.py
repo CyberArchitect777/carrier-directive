@@ -1,12 +1,29 @@
 
-import numpy
+import numpy, random
 from islands import *
+from carriers import *
 
 class Map():
     def __init__(self, OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
         # Creates an islands object and assigns it to the value below
         self.islands_list = Islands(OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
         self.OCEANSIZE = OCEANSIZE
+        # Creates a player and enemy carrier object. Owner values are hardcoded for the moment as multiple carriers
+        # are not scheduled for implementation from the beginning.
+        self.carrier_list = Carriers()
+        self.carrier_list.add_carrier(0, self.find_empty_location(OCEANSIZE))
+        self.carrier_list.add_carrier(1, self.find_empty_location(OCEANSIZE))
+
+    def find_empty_location(self, OCEANSIZE):
+        """
+        Finds an empty location on the map devoid of islands and returns it.
+        """
+        flag = False
+        while (flag == False): # Generate the island coordinates until one is chosen that is within the map boundaries
+            xlocation = random.randint(0,OCEANSIZE-1)
+            ylocation = random.randint(0,OCEANSIZE-1)
+            if self.islands_list.does_location_contain_island(xlocation, ylocation) == False:
+                return xlocation, ylocation
         
     def write_island_map(self, map_type):
         """
