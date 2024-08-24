@@ -26,6 +26,15 @@ class Islands():
             if selected_island.contains_duplicate_coords(island):
                 return True
         return False
+    
+    def does_location_contain_island(self, x_pos, y_pos):
+        """
+        Iterates through all islands looking to see if any of them can be found at the passed location
+        """
+        for island in self.islands_list:
+            if island.does_island_exist_here(x_pos, y_pos) == True:
+                return True
+        return False
 
     def return_islands_list(self):
         """
