@@ -16,6 +16,7 @@ class Island():
         self.xstartlocation = -1
         self.ystartlocation = -1
         self.size = -1
+        self.features = []
 
     def generate_random_island(self, island_number, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
         """
@@ -33,7 +34,32 @@ class Island():
                     print("Random island start y - " + str(self.ystartlocation))
                     print("Random island size = " + str(self.size))
                     flag = True
-    
+        # Determine how many features this island will have
+        if (self.size < 9 ):
+            feature_number = 2
+        else:
+            feature_number = int(self.size / 2) # Rounds down this number
+        for feature_number in range(feature_number):
+            select_feature = 5
+            # Select a random feature to apply from the following
+            # 0 - Lasers Turret (powerful against aircraft and hovercrafts)
+            # 1 - Anti-Aircraft guns (powerful against aircraft)
+            # 2 - Rocket Launchers (powerful against hovercrafts)
+            # 3 - Drone base
+            # 4 - Radar systems
+            # 5 - Fuel depot
+            # 6 - Materials warehouse
+            # 7 - Command Center
+            if (feature_number == 0):
+                # Makes sure a command center is selected first
+                select_feature = 7
+            else:
+                # Select any other feature if this is not the first feature
+                select_feature = random.randint(0,6)
+            island_coords = self.provide_coords()
+            selected_island_location = random.randint(0, len(island_coords))
+            self.features.append([ selected_island_location, select_feature ])
+
     def provide_coords(self):
         """
         Provide a total list of coordinates in which this island exists
