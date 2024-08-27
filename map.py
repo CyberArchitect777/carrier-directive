@@ -11,8 +11,10 @@ class Map():
         # Creates a player and enemy carrier object. Owner values are hardcoded for the moment as multiple carriers
         # are not scheduled for implementation from the beginning.
         self.carrier_list = Carriers()
-        self.carrier_list.add_carrier(0, self.find_empty_location(OCEANSIZE))
-        self.carrier_list.add_carrier(1, self.find_empty_location(OCEANSIZE))
+        player_x_location, player_y_location = self.find_empty_location(OCEANSIZE)
+        enemy_x_location, enemy_y_location = self.find_empty_location(OCEANSIZE)
+        self.carrier_list.add_carrier(0, player_x_location, player_y_location)
+        self.carrier_list.add_carrier(1, enemy_x_location, enemy_y_location)
 
     def find_empty_location(self, OCEANSIZE):
         """
@@ -45,6 +47,10 @@ class Map():
                     map_data[int(xy_coords[0])][int(xy_coords[1])] = island.island_id
                 else:
                     map_data[int(xy_coords[0])][int(xy_coords[1])] = 1
+            # Place -5 value for player carrier
+            map_data[int(self.carrier_list.return_carrier(0).xlocation)][int(self.carrier_list.return_carrier(0).ylocation)] = -5
+            # Place -10 value for enemy carrier
+            map_data[int(self.carrier_list.return_carrier(1).xlocation)][int(self.carrier_list.return_carrier(1).ylocation)] = -10
         if map_type == 1:
             map_file = open("islandmap.txt", "w")
         else:
@@ -53,6 +59,10 @@ class Map():
             for x in range(self.OCEANSIZE):
                 if map_data[x][y] == 0:
                     map_file.write("-")
+                elif map_data[x][y] == -5 and map_type == 0:
+                    map_file.write("P")
+                elif map_data[x][y] == -10 and map_type == 0:
+                    map_file.write("E")
                 else:
                     if map_type == 1:
                         # If each island needs a different character display, output a different ASCII character

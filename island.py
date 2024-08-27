@@ -48,7 +48,7 @@ class Island():
         """
         Checks to see if any part of the island exists at the provided coordinates
         """
-        for location in self.provided_coords():
+        for location in self.provide_coords():
             x_location, y_location = location.split(",")
             if (x_pos == x_location) and (y_pos == y_location):
                 return True

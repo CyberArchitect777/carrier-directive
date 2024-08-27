@@ -16,4 +16,10 @@ class Carriers():
         Add a fresh carrier object to the carriers list
         """
         self.carriers_list.append(Carrier(owner, xlocation, ylocation))
+
+    def return_carrier(self, carrier_number):
+        """
+        Returns a single Carrier object by the specified carrier number
+        """
+        return self.carriers_list[carrier_number]
     
