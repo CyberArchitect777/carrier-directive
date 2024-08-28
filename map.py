@@ -37,7 +37,10 @@ class Map():
             (up to 94 islands without repeating. Repeats occur after that.)
             2 is the same map as 0 but with features mapped onto the island locations
         """
+
         map_data = numpy.zeros((self.OCEANSIZE, self.OCEANSIZE)) # Generate an empty list representing a map
+        # Map symbols = HQ, Laser, Anti-Aircraft, Missile, Drone, Radar, Fuel, Warehouse
+        MAP_SYMBOLS = [ "H", "L", "A", "M", "D", "R", "F", "W"] 
         for island in self.islands_list.return_islands_list():
             # For each island, fetch all the coordinates it occupies and write to the map_data list to highlight the
             # data that needs to be displayed.
@@ -52,7 +55,6 @@ class Map():
                     if island.return_feature_value_by_coord(xy_coords[0], xy_coords[1]) == -1:
                         map_data[int(xy_coords[0])][int(xy_coords[1])] = 1
                     else:
-                        print("Feature reached")
                         map_data[int(xy_coords[0])][int(xy_coords[1])] = island.return_feature_value_by_coord(xy_coords[0], xy_coords[1])
             # Place -5 value for player carrier
             map_data[int(self.carrier_list.return_carrier(0).xlocation)][int(self.carrier_list.return_carrier(0).ylocation)] = -5
@@ -73,7 +75,7 @@ class Map():
                 elif map_data[x][y] == -10 and map_type == 0:
                     map_file.write("E")
                 elif map_data[x][y] > 1 and map_type == 2:
-                    map_file.write(str(int(map_data[x][y])))
+                    map_file.write(str(MAP_SYMBOLS[int(map_data[x][y])-2]))
                 else:
                     if map_type == 1:
                         # If each island needs a different character display, output a different ASCII character
