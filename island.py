@@ -55,11 +55,11 @@ class Island():
                 select_feature = 2
             else:
                 # Select any other feature if this is not the first feature
-                select_feature = random.randint(2,8)
+                select_feature = random.randint(3,9)
                 if (select_feature > 5):
                     flag = False
                     while (flag == False):
-                        select_feature = random.randint(2,8)
+                        select_feature = random.randint(3,9)
                         if (select_feature < 6) and (select_feature > 2):
                             flag = True
                         elif (select_feature > 5):
