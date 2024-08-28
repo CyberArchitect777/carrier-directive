@@ -35,6 +35,7 @@ class Map():
             0 is a basic map, just showing islands and water
             1 shows the same, but each island is shown in a different character according to their island_id 
             (up to 94 islands without repeating. Repeats occur after that.)
+            2 is the same map as 0 but with features mapped onto the island locations
         """
         map_data = numpy.zeros((self.OCEANSIZE, self.OCEANSIZE)) # Generate an empty list representing a map
         for island in self.islands_list.return_islands_list():
@@ -45,16 +46,24 @@ class Map():
                 xy_coords = island_coord.split(",")
                 if map_type == 1:
                     map_data[int(xy_coords[0])][int(xy_coords[1])] = island.island_id
-                else:
+                elif map_type == 0:
                     map_data[int(xy_coords[0])][int(xy_coords[1])] = 1
+                elif map_type == 2:
+                    if island.return_feature_value_by_coord(xy_coords[0], xy_coords[1]) == -1:
+                        map_data[int(xy_coords[0])][int(xy_coords[1])] = 1
+                    else:
+                        print("Feature reached")
+                        map_data[int(xy_coords[0])][int(xy_coords[1])] = island.return_feature_value_by_coord(xy_coords[0], xy_coords[1])
             # Place -5 value for player carrier
             map_data[int(self.carrier_list.return_carrier(0).xlocation)][int(self.carrier_list.return_carrier(0).ylocation)] = -5
             # Place -10 value for enemy carrier
             map_data[int(self.carrier_list.return_carrier(1).xlocation)][int(self.carrier_list.return_carrier(1).ylocation)] = -10
         if map_type == 1:
             map_file = open("islandmap.txt", "w")
-        else:
+        elif map_type == 0:
             map_file = open("basicmap.txt", "w")
+        elif map_type == 2:
+            map_file = open("basicfeaturemap.txt", "w")
         for y in range(self.OCEANSIZE):
             for x in range(self.OCEANSIZE):
                 if map_data[x][y] == 0:
@@ -63,6 +72,8 @@ class Map():
                     map_file.write("P")
                 elif map_data[x][y] == -10 and map_type == 0:
                     map_file.write("E")
+                elif map_data[x][y] > 1 and map_type == 2:
+                    map_file.write(str(int(map_data[x][y])))
                 else:
                     if map_type == 1:
                         # If each island needs a different character display, output a different ASCII character

@@ -1,5 +1,6 @@
 
 import random
+from features import *
 
 class Island():
     """
@@ -16,7 +17,7 @@ class Island():
         self.xstartlocation = -1
         self.ystartlocation = -1
         self.size = -1
-        self.features = []
+        self.features = Features()
 
     def generate_random_island(self, island_number, OCEANSIZE, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
         """
@@ -35,30 +36,38 @@ class Island():
                     print("Random island size = " + str(self.size))
                     flag = True
         # Determine how many features this island will have
-        if (self.size < 9 ):
+        if ((self.size ** 2) < 9 ):
             feature_number = 2
         else:
-            feature_number = int(self.size / 2) # Rounds down this number
-        for feature_number in range(feature_number):
-            select_feature = 5
+            feature_number = int((self.size ** 2) / 2) # Rounds down this number
+        for current_feature_number in range(feature_number):
             # Select a random feature to apply from the following
-            # 0 - Lasers Turret (powerful against aircraft and hovercrafts)
-            # 1 - Anti-Aircraft guns (powerful against aircraft)
-            # 2 - Rocket Launchers (powerful against hovercrafts)
-            # 3 - Drone base
-            # 4 - Radar systems
-            # 5 - Fuel depot
-            # 6 - Materials warehouse
-            # 7 - Command Center
-            if (feature_number == 0):
+            # 2 - Lasers Turret (powerful against aircraft and hovercrafts)
+            # 3 - Anti-Aircraft guns (powerful against aircraft)
+            # 4 - Rocket Launchers (powerful against hovercrafts)
+            # 5 - Drone base
+            # 6 - Radar systems
+            # 7 - Fuel depot
+            # 8 - Materials warehouse
+            # 9 - Command Center
+            if (current_feature_number == 0):
                 # Makes sure a command center is selected first
-                select_feature = 7
+                select_feature = 9
             else:
                 # Select any other feature if this is not the first feature
-                select_feature = random.randint(0,6)
+                select_feature = random.randint(2,8)
             island_coords = self.provide_coords()
-            selected_island_location = random.randint(0, len(island_coords))
-            self.features.append([ selected_island_location, select_feature ])
+            selected_island_location = random.randint(0, len(island_coords)-1)
+            print("Total - " + str(len(island_coords)) + " Selected - " + str(selected_island_location))
+            selected_xy_coords = island_coords[selected_island_location].split(",")
+            self.features.add_feature(selected_xy_coords[0], selected_xy_coords[1], select_feature)
+
+    def return_feature_value_by_coord(self, x_location, y_location):
+        """
+        Return feature value on the island by coordinates
+        """
+
+        return self.features.return_feature_value_by_coords(x_location, y_location)
 
     def provide_coords(self):
         """

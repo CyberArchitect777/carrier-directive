@@ -13,3 +13,4 @@ ISLAND_MAX_SIZE = 6 # Maximum size of the island in both x and y directions
 new_game = Map(OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE) # Start generating the game
 new_game.write_island_map(0) # Draws a basic island map to basicmap.txt
 new_game.write_island_map(1) # Draws a island ID linked map to islandmap.txt
+new_game.write_island_map(2) # Draws a basic island (with feature map) to islandfeaturemap.txt
