@@ -28,4 +28,10 @@ class Features():
             if (x_location == feature_object.x_location) and (y_location == feature_object.y_location):
                 feature_value = feature_object.feature_number
         return feature_value
-        
+    
+    def does_feature_type_already_exist(self, feature_type):
+        for feature in self.features_list:
+            if feature == feature_type:
+                return True
+        return False
+    

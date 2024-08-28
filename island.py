@@ -39,23 +39,32 @@ class Island():
         if ((self.size ** 2) < 9 ):
             feature_number = 2
         else:
-            feature_number = int((self.size ** 2) / 2) # Rounds down this number
+            feature_number = int((self.size ** 2) / 4) # Rounds down this number
         for current_feature_number in range(feature_number):
             # Select a random feature to apply from the following
-            # 2 - Lasers Turret (powerful against aircraft and hovercrafts)
-            # 3 - Anti-Aircraft guns (powerful against aircraft)
-            # 4 - Rocket Launchers (powerful against hovercrafts)
-            # 5 - Drone base
-            # 6 - Radar systems
-            # 7 - Fuel depot
-            # 8 - Materials warehouse
-            # 9 - Command Center
+            # 2 - Command Center
+            # 3 - Lasers Turret (powerful against aircraft and hovercrafts)
+            # 4 - Anti-Aircraft guns (powerful against aircraft)
+            # 5 - Rocket Launchers (powerful against hovercrafts)
+            # 6 - Drone base
+            # 7 - Radar systems
+            # 8 - Fuel depot
+            # 9 - Materials warehouse
             if (current_feature_number == 0):
                 # Makes sure a command center is selected first
-                select_feature = 9
+                select_feature = 2
             else:
                 # Select any other feature if this is not the first feature
                 select_feature = random.randint(2,8)
+                if (select_feature > 5):
+                    flag = False
+                    while (flag == False):
+                        select_feature = random.randint(2,8)
+                        if (select_feature < 6) and (select_feature > 2):
+                            flag = True
+                        elif (select_feature > 5):
+                            if not self.features.does_feature_type_already_exist(select_feature):
+                                flag = True                    
             island_coords = self.provide_coords()
             selected_island_location = random.randint(0, len(island_coords)-1)
             print("Total - " + str(len(island_coords)) + " Selected - " + str(selected_island_location))
