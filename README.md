@@ -1,7 +1,7 @@
 
 # Carrier Directive
 ## By Barrie Millar
-### A text-mode strategic version of the legacyh 1988 game Carrier Command
+### A text-mode strategic game inspired by the 1988 game Carrier Command
 
 ## Introduction
 
