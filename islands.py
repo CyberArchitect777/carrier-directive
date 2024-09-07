@@ -16,7 +16,6 @@ class Islands():
             if self.checkduplicate(current_island) == False: # Generates a new island constantly until the coordinates are in an empty area on the map
                 self.islands_list.append(current_island)
                 islandNumber += 1
-                print("Generating island " + str(islandNumber))
 
     def checkduplicate(self, selected_island):
         """

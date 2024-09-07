@@ -67,7 +67,6 @@ class Island():
                                 flag = True                    
             island_coords = self.provide_coords()
             selected_island_location = random.randint(0, len(island_coords)-1)
-            print("Total - " + str(len(island_coords)) + " Selected - " + str(selected_island_location))
             selected_xy_coords = island_coords[selected_island_location].split(",")
             self.features.add_feature(selected_xy_coords[0], selected_xy_coords[1], select_feature)
 
@@ -103,7 +102,6 @@ class Island():
         Compare another island to this one to see if any coordinates are shared
         """
         compare_island_space = set(selected_island.provide_coords()).intersection(self.provide_coords())
-        print("Set length: " + str(len(compare_island_space)))
         if len(compare_island_space) == 0:
             return False
         else:
