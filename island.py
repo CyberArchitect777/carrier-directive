@@ -31,9 +31,6 @@ class Island():
             self.ystartlocation = random.randint(0,OCEANSIZE-1)
             if (self.xstartlocation + self.size) < OCEANSIZE: # Checks to see if the generation does not go off the side of the map.
                 if (self.ystartlocation + self.size) < OCEANSIZE:
-                    print("Random island start x - " + str(self.xstartlocation))
-                    print("Random island start y - " + str(self.ystartlocation))
-                    print("Random island size = " + str(self.size))
                     flag = True
         # Determine how many features this island will have
         if ((self.size ** 2) < 9 ):

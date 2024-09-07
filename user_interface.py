@@ -9,18 +9,19 @@ class UserInterface():
             Sets up the game loop that provides output and receives input from the user
         """
         exitFlag = False
-        print("Welcome to Carrier Directive")
+        print("\nWelcome to Carrier Directive")
         print("By Barrie Millar")
         print("A text-mode strategic game inspired by the 1988 game Carrier Command")
-        print("\n\nDebug mode enabled by default:")
-        print('Please enter your next command or "help" for more information\n')
+        print("\nDebug mode enabled by default\n")
         while (exitFlag == False):
+            print('Please enter a command or "h" for more information')
             command = input()
-            print("\n")
-            if command.lower() == "help":
-                print("Commands available\n\n")
-                print("quit - Quits the game")
-                print("\n")
+            if command.lower() == "h":
+                print("\nCommands available\n")
+                print("quit - Quits the game\n")
+            elif command.lower() == "quit":
+                break
+            
 
 
 
