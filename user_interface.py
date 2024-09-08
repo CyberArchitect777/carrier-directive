@@ -21,6 +21,7 @@ class UserInterface():
             if command.lower() == "h":
                 print("\nCommands available\n")
                 print("Game commands:\n")
+                print("status - Carrier status:")
                 print("quit - Quits the game")
                 print("\nDebug commands:\n")
                 print("p - Show location for the player carrier")
@@ -31,6 +32,12 @@ class UserInterface():
                 print("m3 - Save all maps available\n")
             elif command.lower() == "quit":
                 break
+            elif command.lower() == "status":
+                player_carrier = map_data.return_carrier(0)
+                print("\nCarrier Status\n")
+                print("Fuel: " + str(player_carrier.fuel))
+                print("Supplies: " + str(player_carrier.supplies))
+                print("Damage: " + str(player_carrier.damage) + "\n")
             elif command.lower() == "m0":
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
             elif command.lower() == "m1":
