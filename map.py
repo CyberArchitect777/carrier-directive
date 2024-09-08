@@ -16,6 +16,12 @@ class Map():
         self.carrier_list.add_carrier(0, player_x_location, player_y_location)
         self.carrier_list.add_carrier(1, enemy_x_location, enemy_y_location)
 
+    def return_carrier(self, carrier_number):
+        """
+        Returns a Carrier object based on the number provided by the user
+        """
+        return self.carrier_list.return_carrier(carrier_number)
+
     def find_empty_location(self, OCEANSIZE):
         """
         Finds an empty location on the map devoid of islands and returns it.

@@ -39,6 +39,5 @@ class UserInterface():
                 map_data.write_island_map(1) # Draws a island ID linked map to islandmap.txt
                 map_data.write_island_map(2) # Draws a basic island (with feature map) to islandfeaturemap.txt
             elif command.lower() == "s":
-                map_data.carrier_list 
-                print()
-
+                player_carrier = map_data.return_carrier(0)
+                print("Player Carrier Location - " + str(player_carrier.xlocation) + ", " + str(player_carrier.ylocation))
