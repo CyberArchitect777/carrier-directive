@@ -22,8 +22,9 @@ class UserInterface():
                 print("\nCommands available\n")
                 print("Game commands:\n")
                 print("quit - Quits the game")
-                print("Debug commands:\n")
+                print("\nDebug commands:\n")
                 print("p - Show location for the player carrier")
+                print("e - Show location for the enemy carrier")
                 print("m0 - Save a basic island map to basicmap.txt")
                 print("m1 - Save an island ID linked map to islandmap.txt")
                 print("m2 - Save a basic island (with feature map) to islandfeaturemap.txt")
@@ -43,3 +44,6 @@ class UserInterface():
             elif command.lower() == "p":
                 player_carrier = map_data.return_carrier(0)
                 print("Player Carrier Location - " + str(player_carrier.xlocation) + ", " + str(player_carrier.ylocation))
+            elif command.lower() == "e":
+                enemy_carrier = map_data.return_carrier(1)
+                print("Enemy Carrier Location - " + str(enemy_carrier.xlocation) + ", " + str(enemy_carrier.ylocation))
