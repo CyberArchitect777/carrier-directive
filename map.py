@@ -16,6 +16,32 @@ class Map():
         self.carrier_list.add_carrier(0, player_x_location, player_y_location)
         self.carrier_list.add_carrier(1, enemy_x_location, enemy_y_location)
 
+    def graphical_scan_from_carrier(self, carrier, scan_radius):
+        """
+        Returns a graphical representation of the immediate locality around the selected carrier
+        """
+        xposition, yposition = carrier.return_carrier_location()
+        scan_size = (scan_radius * 2) + 1
+        internal_map_data = numpy.zeros((int(scan_size), int(scan_size))) # Generate an empty list representing the immediate locality
+        map_graphical_data = numpy.full((scan_size, scan_size), "", dtype=str)            
+        xstartposition = xposition - scan_radius
+        ystartposition = yposition - scan_radius
+
+        for island in self.islands_list.return_islands_list():
+            for x in range(xstartposition, xstartposition + scan_size):
+                for y in range(ystartposition, ystartposition + scan_size):
+                    if island.does_island_exist_here(x, y):
+                        internal_map_data[x][y] = island.island_id
+
+        for x in range(scan_radius):
+            for y in range(scan_radius):
+                if internal_map_data[x][y] == 0:
+                    map_graphical_data[x][y] = "-"
+                else:
+                    map_graphical_data[x][y] = "I"
+        
+        return map_graphical_data
+
     def return_carrier(self, carrier_number):
         """
         Returns a Carrier object based on the number provided by the user

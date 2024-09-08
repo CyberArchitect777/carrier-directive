@@ -22,6 +22,7 @@ class UserInterface():
                 print("\nCommands available\n")
                 print("Game commands:\n")
                 print("status - Carrier status:")
+                print("scan - Scan local area")
                 print("quit - Quits the game")
                 print("\nDebug commands:\n")
                 print("p - Show location for the player carrier")
@@ -38,6 +39,9 @@ class UserInterface():
                 print("Fuel: " + str(player_carrier.fuel))
                 print("Supplies: " + str(player_carrier.supplies))
                 print("Damage: " + str(player_carrier.damage) + "\n")
+            elif command.lower() == "scan":
+                print("\nCarrier Scan\n")
+                print(map_data.graphical_scan_from_carrier(map_data.return_carrier(0), 3))
             elif command.lower() == "m0":
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
             elif command.lower() == "m1":
