@@ -54,3 +54,5 @@ class UserInterface():
             elif command.lower() == "e":
                 enemy_carrier = map_data.return_carrier(1)
                 print("Enemy Carrier Location - " + str(enemy_carrier.xlocation) + ", " + str(enemy_carrier.ylocation))
+            else:
+                print("\nCommand not recognised. Please try again.\n")
