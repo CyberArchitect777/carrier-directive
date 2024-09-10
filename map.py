@@ -23,7 +23,7 @@ class Map():
         xposition, yposition = carrier.return_carrier_location()
         scan_size = (scan_radius * 2) + 1
         internal_map_data = numpy.zeros((int(scan_size), int(scan_size))) # Generate an empty list representing the immediate locality
-        map_graphical_data = numpy.full((scan_size, scan_size), "", dtype=str)            
+        
         xstartposition = xposition - scan_radius
         ystartposition = yposition - scan_radius
 
@@ -31,16 +31,9 @@ class Map():
             for x in range(xstartposition, xstartposition + scan_size):
                 for y in range(ystartposition, ystartposition + scan_size):
                     if island.does_island_exist_here(x, y):
-                        internal_map_data[x][y] = island.island_id
-
-        for x in range(scan_radius):
-            for y in range(scan_radius):
-                if internal_map_data[x][y] == 0:
-                    map_graphical_data[x][y] = "-"
-                else:
-                    map_graphical_data[x][y] = "I"
+                        internal_map_data[x-xstartposition][y-ystartposition] = island.island_id
         
-        return map_graphical_data
+        return internal_map_data
 
     def return_carrier(self, carrier_number):
         """

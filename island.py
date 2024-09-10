@@ -90,7 +90,7 @@ class Island():
         """
         for location in self.provide_coords():
             x_location, y_location = location.split(",")
-            if (x_pos == x_location) and (y_pos == y_location):
+            if (x_pos == int(x_location)) and (y_pos == int(y_location)):
                 return True
         return False
 

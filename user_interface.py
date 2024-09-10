@@ -41,7 +41,19 @@ class UserInterface():
                 print("Damage: " + str(player_carrier.damage) + "\n")
             elif command.lower() == "scan":
                 print("\nCarrier Scan\n")
-                print(map_data.graphical_scan_from_carrier(map_data.return_carrier(0), 3))
+                scan_radius = 3
+                scanned_map = map_data.graphical_scan_from_carrier(map_data.return_carrier(0), scan_radius)
+                print(scanned_map)
+                # Create a array of the specified size full of empty strings
+                map_graphical_data = numpy.full(((scan_radius * 2) + 1, (scan_radius * 2) + 1), "", dtype=str)
+                for x in range((scan_radius * 2) + 1):
+                    for y in range((scan_radius * 2) + 1):
+                        if scanned_map[x][y] == 0:
+                            print("-", end="")
+                        else:
+                            print("I", end="")
+                    print("\n")                            
+
             elif command.lower() == "m0":
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
             elif command.lower() == "m1":
