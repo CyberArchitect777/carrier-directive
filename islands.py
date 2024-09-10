@@ -37,6 +37,12 @@ class Islands():
 
     def return_islands_list(self):
         """
-            returns the full list of island objects
+        Returns the full list of island objects
         """
         return self.islands_list
+    
+    def return_number_of_islands(self):
+        """
+        Return the number of islands
+        """
+        return len(self.islands_list)
