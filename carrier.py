@@ -20,3 +20,28 @@ class Carrier():
         Return x and y locations of this carrier in two return parameters.
         """
         return self.xlocation, self.ylocation
+    
+    def move_carrier(self, direction):
+        """
+        Move the carrier in a direction specified by a string based on abbreviated compass directions
+        """
+        if direction == "n":
+            self.ylocation -= 1
+        elif direction == "ne":
+            self.xlocation += 1
+            self.ylocation -= 1        
+        elif direction == "e":
+            self.xlocation += 1        
+        elif direction == "se":
+            self.xlocation += 1
+            self.ylocation += 1        
+        elif direction == "s":
+            self.ylocation += 1        
+        elif direction == "sw":
+            self.ylocation += 1
+            self.xlocation -+ 1        
+        elif direction == "w":
+            self.xlocation -= 1
+        elif direction == "nw":
+            self.xlocation -= 1
+            self.ylocation -= 1
