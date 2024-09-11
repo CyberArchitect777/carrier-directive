@@ -107,7 +107,7 @@ class UserInterface():
                 if (x == scan_radius) and (y == scan_radius):
                     print("C ", end="")
                 else:
-                    if scanned_map[x][y] == 0:
+                    if scanned_map[y][x] == 0:
                         print("- ", end="")
                     else:
                         print("I ", end="")
