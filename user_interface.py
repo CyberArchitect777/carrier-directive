@@ -87,7 +87,7 @@ class UserInterface():
                 turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "w":
-                player_carrier.move_carrier("nw")
+                player_carrier.move_carrier("w")
                 turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "nw":
