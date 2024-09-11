@@ -11,6 +11,7 @@ class UserInterface():
             Sets up the game loop that provides output and receives input from the user
         """
         exitFlag = False
+        turn_counter = 1
         self.map_data = map_data
         player_carrier = map_data.return_carrier(0)
         enemy_carrier = map_data.return_carrier(1)
@@ -19,6 +20,7 @@ class UserInterface():
         print("A text-mode strategic game inspired by the 1988 game Carrier Command")
         print("\nDebug mode enabled by default\n")
         while (exitFlag == False):
+            print ("Turn " + str(turn_counter))
             print('Please enter a command or "h" for more information')
             command = input()
             if command.lower() == "h":
@@ -62,27 +64,35 @@ class UserInterface():
                 print("Enemy Carrier Location - " + str(enemy_carrier.xlocation) + ", " + str(enemy_carrier.ylocation))
             elif command.lower() == "n":
                 player_carrier.move_carrier("n")
+                turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "ne":
                 player_carrier.move_carrier("ne")
+                turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "e":
                 player_carrier.move_carrier("e")
+                turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "se":
                 player_carrier.move_carrier("se")
+                turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "s":
                 player_carrier.move_carrier("s")
+                turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "sw":
                 player_carrier.move_carrier("sw")
+                turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "w":
                 player_carrier.move_carrier("nw")
+                turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "nw":
                 player_carrier.move_carrier("nw")
+                turn_counter += 1
                 self.carrier_scan()
             else:
                 print("\nCommand not recognised. Please try again.\n")
