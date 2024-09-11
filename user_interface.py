@@ -11,6 +11,9 @@ class UserInterface():
             Sets up the game loop that provides output and receives input from the user
         """
         exitFlag = False
+        self.map_data = map_data
+        player_carrier = map_data.return_carrier(0)
+        enemy_carrier = map_data.return_carrier(1)
         print("\nWelcome to Carrier Directive")
         print("By Barrie Millar")
         print("A text-mode strategic game inspired by the 1988 game Carrier Command")
@@ -21,12 +24,13 @@ class UserInterface():
             if command.lower() == "h":
                 print("\nCommands available\n")
                 print("Game commands:\n")
+                print("n ne e se s sw w nw - Move carrier in respective compass directions")
                 print("status - Carrier status:")
                 print("scan - Scan local area")
                 print("quit - Quits the game")
                 print("\nDebug commands:\n")
-                print("p - Show location for the player carrier")
-                print("e - Show location for the enemy carrier")
+                print("lp - Show location for the player carrier")
+                print("le - Show location for the enemy carrier")
                 print("m0 - Save a basic island map to basicmap.txt")
                 print("m1 - Save an island ID linked map to islandmap.txt")
                 print("m2 - Save a basic island (with feature map) to islandfeaturemap.txt")
@@ -41,21 +45,7 @@ class UserInterface():
                 print("Damage: " + str(player_carrier.damage) + "\n")
             elif command.lower() == "scan":
                 print("\nCarrier Scan\n")
-                scan_radius = 3
-                scanned_map = map_data.graphical_scan_from_carrier(map_data.return_carrier(0), scan_radius)
-                # Create a array of the specified size full of empty strings
-                map_graphical_data = numpy.full(((scan_radius * 2) + 1, (scan_radius * 2) + 1), "", dtype=str)
-                for x in range((scan_radius * 2) + 1):
-                    for y in range((scan_radius * 2) + 1):
-                        if (x == scan_radius) and (y == scan_radius):
-                            print("C ", end="")
-                        else:
-                            if scanned_map[x][y] == 0:
-                                print("- ", end="")
-                            else:
-                                print("I ", end="")
-                    print("\n")                                
-
+                self.carrier_scan()
             elif command.lower() == "m0":
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
             elif command.lower() == "m1":
@@ -66,11 +56,49 @@ class UserInterface():
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
                 map_data.write_island_map(1) # Draws a island ID linked map to islandmap.txt
                 map_data.write_island_map(2) # Draws a basic island (with feature map) to islandfeaturemap.txt
-            elif command.lower() == "p":
-                player_carrier = map_data.return_carrier(0)
+            elif command.lower() == "lp":
                 print("Player Carrier Location - " + str(player_carrier.xlocation) + ", " + str(player_carrier.ylocation))
-            elif command.lower() == "e":
-                enemy_carrier = map_data.return_carrier(1)
+            elif command.lower() == "le":
                 print("Enemy Carrier Location - " + str(enemy_carrier.xlocation) + ", " + str(enemy_carrier.ylocation))
+            elif command.lower() == "n":
+                player_carrier.move_carrier("n")
+                self.carrier_scan()
+            elif command.lower() == "ne":
+                player_carrier.move_carrier("ne")
+                self.carrier_scan()
+            elif command.lower() == "e":
+                player_carrier.move_carrier("e")
+                self.carrier_scan()
+            elif command.lower() == "se":
+                player_carrier.move_carrier("se")
+                self.carrier_scan()
+            elif command.lower() == "s":
+                player_carrier.move_carrier("s")
+                self.carrier_scan()
+            elif command.lower() == "sw":
+                player_carrier.move_carrier("sw")
+                self.carrier_scan()
+            elif command.lower() == "w":
+                player_carrier.move_carrier("nw")
+                self.carrier_scan()
+            elif command.lower() == "nw":
+                player_carrier.move_carrier("nw")
+                self.carrier_scan()
             else:
                 print("\nCommand not recognised. Please try again.\n")
+
+    def carrier_scan(self):
+        scan_radius = 3
+        scanned_map = self.map_data.graphical_scan_from_carrier(self.map_data.return_carrier(0), scan_radius)
+        # Create a array of the specified size full of empty strings
+        map_graphical_data = numpy.full(((scan_radius * 2) + 1, (scan_radius * 2) + 1), "", dtype=str)
+        for x in range((scan_radius * 2) + 1):
+            for y in range((scan_radius * 2) + 1):
+                if (x == scan_radius) and (y == scan_radius):
+                    print("C ", end="")
+                else:
+                    if scanned_map[x][y] == 0:
+                        print("- ", end="")
+                    else:
+                        print("I ", end="")
+            print("\n")
