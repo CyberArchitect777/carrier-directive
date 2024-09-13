@@ -11,7 +11,7 @@ class UserInterface():
             Sets up the game loop that provides output and receives input from the user
         """
         exitFlag = False
-        turn_counter = 1
+        turn_counter = 0
         self.map_data = map_data
         player_carrier = map_data.return_carrier(0)
         enemy_carrier = map_data.return_carrier(1)
@@ -20,8 +20,11 @@ class UserInterface():
         print("A text-mode strategic game inspired by the 1988 game Carrier Command")
         print("\nDebug mode enabled by default\n")
         while (exitFlag == False):
+            if turn_counter == 0:
+                self.carrier_scan()
+                turn_counter += 1
             print ("Turn " + str(turn_counter))
-            print('Please enter a command or "h" for more information')
+            print('Please enter a command or "h" for more information: ')
             command = input()
             if command.lower() == "h":
                 print("\nCommands available\n")
@@ -46,7 +49,6 @@ class UserInterface():
                 print("Supplies: " + str(player_carrier.supplies))
                 print("Damage: " + str(player_carrier.damage) + "\n")
             elif command.lower() == "scan":
-                print("\nCarrier Scan\n")
                 self.carrier_scan()
             elif command.lower() == "m0":
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
@@ -98,6 +100,7 @@ class UserInterface():
                 print("\nCommand not recognised. Please try again.\n")
 
     def carrier_scan(self):
+        print("\nCarrier Scan\n")
         scan_radius = 3
         scanned_map = self.map_data.graphical_scan_from_carrier(self.map_data.return_carrier(0), scan_radius)
         # Create a array of the specified size full of empty strings
