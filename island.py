@@ -93,6 +93,18 @@ class Island():
             if (x_pos == int(x_location)) and (y_pos == int(y_location)):
                 return True
         return False
+    
+    def does_island_exist_in_next_square(self, x_pos, y_pos):
+        """
+        Checks to see if any part of the island exists in the next square to the provided coordinates
+        """
+        for location in self.provided_coords():
+            x_location, y_location = location.split(",")
+            for x_scan in range(-1, 2): # Starts loop at -1
+                for y_scan in range(-1, 2):
+                    if (x_pos == int(x_location+x_scan)) and (y_pos == int(y_location+y_scan)):
+                        return True
+        return False
 
     def contains_duplicate_coords(self, selected_island):
         """
