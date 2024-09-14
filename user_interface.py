@@ -104,8 +104,9 @@ class UserInterface():
         print("\nCarrier Scan\n")
         islands_near_carrier = self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation)
         if len(islands_near_carrier) > 0:
+            ISLAND_OWNER = [ "Unclaimed", "Player Claimed", "Enemy Claimed"]
             for island in islands_near_carrier:
-                print("* Island " + str(island.island_id) + " is near the carrier\n")
+                print("* Island " + str(island.island_id) + " (" + ISLAND_OWNER[island.island_owner] + ") is near the carrier\n")
         scan_radius = 3
         scanned_map = self.map_data.graphical_scan_from_carrier(self.map_data.return_carrier(0), scan_radius)
         # Create a array of the specified size full of empty strings
