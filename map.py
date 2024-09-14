@@ -16,6 +16,12 @@ class Map():
         self.carrier_list.add_carrier(0, player_x_location, player_y_location)
         self.carrier_list.add_carrier(1, enemy_x_location, enemy_y_location)
 
+    def return_islands_object(self):
+        """
+        Returns the islands object associated with this map
+        """
+        return self.islands_list
+
     def graphical_scan_from_carrier(self, carrier, scan_radius):
         """
         Returns a graphical representation of the immediate locality around the selected carrier

@@ -13,12 +13,13 @@ class UserInterface():
         exitFlag = False
         turn_counter = 0
         self.map_data = map_data
+        self.islands_data = map_data.return_islands_object()
         player_carrier = map_data.return_carrier(0)
         enemy_carrier = map_data.return_carrier(1)
         print("\nWelcome to Carrier Directive")
         print("By Barrie Millar")
         print("A text-mode strategic game inspired by the 1988 game Carrier Command")
-        print("\nDebug mode enabled by default\n")
+        print("\nDebug mode enabled by default")
         while (exitFlag == False):
             if turn_counter == 0:
                 self.carrier_scan()
