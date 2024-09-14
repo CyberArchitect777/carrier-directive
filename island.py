@@ -98,11 +98,11 @@ class Island():
         """
         Checks to see if any part of the island exists in the next square to the provided coordinates
         """
-        for location in self.provided_coords():
+        for location in self.provide_coords():
             x_location, y_location = location.split(",")
             for x_scan in range(-1, 2): # Starts loop at -1
                 for y_scan in range(-1, 2):
-                    if (x_pos == int(x_location+x_scan)) and (y_pos == int(y_location+y_scan)):
+                    if (x_pos == int(x_location)+x_scan) and (y_pos == int(y_location)+y_scan):
                         return True
         return False
 
