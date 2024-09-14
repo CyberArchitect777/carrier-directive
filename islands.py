@@ -35,14 +35,15 @@ class Islands():
                 return True
         return False
     
-    def is_location_near_island(self, x_pos, y_pos):
+    def output_islands_near_location(self, x_pos, y_pos):
         """
-        Checks to see if the provided location is nearby any island
+        Output a list of all islands near the provided location
         """
+        island_list = []
         for island in self.islands_list:
             if island.does_island_exist_in_next_square(x_pos, y_pos) == True:
-                return True
-        return False
+                island_list.append(island)
+        return island_list
 
     def return_islands_list(self):
         """
