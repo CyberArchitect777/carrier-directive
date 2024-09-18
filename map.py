@@ -43,6 +43,25 @@ class Map():
                             internal_map_data[x-xstartposition][y-ystartposition] = island.island_id
         
         return internal_map_data
+    
+    def move_validity(self, x_location, y_location):
+        """
+        Checks to see if there is any reason why a carrier cannot move to this location
+        Returns the following code:
+        0 = Move is valid
+        1 = Move is off the edge of the map
+        2 = Move is in an island
+        3 = Move is into the space occupied by an enemy carrier
+        """
+
+        if x_location < 0 or y_location < 0 or x_location > (self.OCEANSIZE-1) or y_location > (self.OCEANSIZE-1):
+            return 1
+        elif self.islands_list.does_location_contain_island(x_location, y_location):
+            return 2
+        elif self.carrier_list[1].xlocation == x_location and self.carrier_list[1].ylocation == y_location:
+            return 3
+        else:
+            return 0
 
     def return_carrier(self, carrier_number):
         """

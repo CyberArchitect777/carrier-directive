@@ -66,39 +66,49 @@ class UserInterface():
             elif command.lower() == "le":
                 print("Enemy Carrier Location - " + str(enemy_carrier.xlocation) + ", " + str(enemy_carrier.ylocation))
             elif command.lower() == "n":
+                self.map_data.move_validity(player_carrier.xlocation, (player_carrier.ylocation-1))
                 player_carrier.move_carrier("n")
                 turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "ne":
+                self.map_data.move_validity((player_carrier.xlocation+1), (player_carrier.ylocation-1))
                 player_carrier.move_carrier("ne")
                 turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "e":
+                self.map_data.move_validity((player_carrier.xlocation+1), player_carrier.ylocation)
                 player_carrier.move_carrier("e")
                 turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "se":
+                self.map_data.move_validity((player_carrier.xlocation+1), (player_carrier.ylocation+1))
                 player_carrier.move_carrier("se")
                 turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "s":
+                self.map_data.move_validity(player_carrier.xlocation, (player_carrier.ylocation+1))
                 player_carrier.move_carrier("s")
                 turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "sw":
+                self.map_data.move_validity((player_carrier.xlocation-1), (player_carrier.ylocation+1))
                 player_carrier.move_carrier("sw")
                 turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "w":
+                self.map_data.move_validity((player_carrier.xlocation-1), player_carrier.ylocation)
                 player_carrier.move_carrier("w")
                 turn_counter += 1
                 self.carrier_scan()
             elif command.lower() == "nw":
+                self.map_data.move_validity((player_carrier.xlocation-1), (player_carrier.ylocation-1))
                 player_carrier.move_carrier("nw")
                 turn_counter += 1
                 self.carrier_scan()
             else:
                 print("\nCommand not recognised. Please try again.\n")
+
+    
 
     def carrier_scan(self):
         print("\nCarrier Scan\n")
