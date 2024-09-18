@@ -102,6 +102,7 @@ class UserInterface():
 
     def carrier_scan(self):
         print("\nCarrier Scan\n")
+        print("Legend: C = Player Carrier, - = Water, I = Island, X = Out of Map Zone\n")
         islands_near_carrier = self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation)
         if len(islands_near_carrier) > 0:
             ISLAND_OWNER = [ "Unclaimed", "Player Claimed", "Enemy Claimed"]
