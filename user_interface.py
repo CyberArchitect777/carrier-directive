@@ -118,6 +118,8 @@ class UserInterface():
                 else:
                     if scanned_map[y][x] == 0:
                         print("- ", end="")
+                    elif scanned_map[y][x] == -1:
+                        print("X ", end="")
                     else:
                         print("I ", end="")
             print("\n")
