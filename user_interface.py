@@ -11,20 +11,21 @@ class UserInterface():
             Sets up the game loop that provides output and receives input from the user
         """
         exitFlag = False
-        turn_counter = 0
+        self.turn_counter = 0
         self.map_data = map_data
         self.islands_data = map_data.return_islands_object()
-        player_carrier = map_data.return_carrier(0)
-        enemy_carrier = map_data.return_carrier(1)
+        self.player_carrier = map_data.return_carrier(0)
+        self.enemy_carrier = map_data.return_carrier(1)
+        possible_directions = [ "n", "ne", "e", "se", "s", "sw", "w", "nw" ]
         print("\nWelcome to Carrier Directive")
         print("By Barrie Millar")
         print("A text-mode strategic game inspired by the 1988 game Carrier Command")
         print("\nDebug mode enabled by default")
         while (exitFlag == False):
-            if turn_counter == 0:
+            if self.turn_counter == 0:
                 self.carrier_scan()
-                turn_counter += 1
-            print ("Turn " + str(turn_counter))
+                self.turn_counter += 1
+            print ("Turn " + str(self.turn_counter))
             print('Please enter a command or "h" for more information: ')
             command = input()
             if command.lower() == "h":
@@ -44,11 +45,11 @@ class UserInterface():
             elif command.lower() == "quit":
                 break
             elif command.lower() == "status":
-                player_carrier = map_data.return_carrier(0)
+                self.player_carrier = map_data.return_carrier(0)
                 print("\nCarrier Status\n")
-                print("Fuel: " + str(player_carrier.fuel))
-                print("Supplies: " + str(player_carrier.supplies))
-                print("Damage: " + str(player_carrier.damage) + "\n")
+                print("Fuel: " + str(self.player_carrier.fuel))
+                print("Supplies: " + str(self.player_carrier.supplies))
+                print("Damage: " + str(self.player_carrier.damage) + "\n")
             elif command.lower() == "scan":
                 self.carrier_scan()
             elif command.lower() == "m0":
@@ -62,53 +63,29 @@ class UserInterface():
                 map_data.write_island_map(1) # Draws a island ID linked map to islandmap.txt
                 map_data.write_island_map(2) # Draws a basic island (with feature map) to islandfeaturemap.txt
             elif command.lower() == "lp":
-                print("Player Carrier Location - " + str(player_carrier.xlocation) + ", " + str(player_carrier.ylocation))
+                print("Player Carrier Location - " + str(self.player_carrier.xlocation) + ", " + str(self.player_carrier.ylocation))
             elif command.lower() == "le":
-                print("Enemy Carrier Location - " + str(enemy_carrier.xlocation) + ", " + str(enemy_carrier.ylocation))
-            elif command.lower() == "n":
-                self.map_data.move_validity(player_carrier.xlocation, (player_carrier.ylocation-1))
-                player_carrier.move_carrier("n")
-                turn_counter += 1
-                self.carrier_scan()
-            elif command.lower() == "ne":
-                self.map_data.move_validity((player_carrier.xlocation+1), (player_carrier.ylocation-1))
-                player_carrier.move_carrier("ne")
-                turn_counter += 1
-                self.carrier_scan()
-            elif command.lower() == "e":
-                self.map_data.move_validity((player_carrier.xlocation+1), player_carrier.ylocation)
-                player_carrier.move_carrier("e")
-                turn_counter += 1
-                self.carrier_scan()
-            elif command.lower() == "se":
-                self.map_data.move_validity((player_carrier.xlocation+1), (player_carrier.ylocation+1))
-                player_carrier.move_carrier("se")
-                turn_counter += 1
-                self.carrier_scan()
-            elif command.lower() == "s":
-                self.map_data.move_validity(player_carrier.xlocation, (player_carrier.ylocation+1))
-                player_carrier.move_carrier("s")
-                turn_counter += 1
-                self.carrier_scan()
-            elif command.lower() == "sw":
-                self.map_data.move_validity((player_carrier.xlocation-1), (player_carrier.ylocation+1))
-                player_carrier.move_carrier("sw")
-                turn_counter += 1
-                self.carrier_scan()
-            elif command.lower() == "w":
-                self.map_data.move_validity((player_carrier.xlocation-1), player_carrier.ylocation)
-                player_carrier.move_carrier("w")
-                turn_counter += 1
-                self.carrier_scan()
-            elif command.lower() == "nw":
-                self.map_data.move_validity((player_carrier.xlocation-1), (player_carrier.ylocation-1))
-                player_carrier.move_carrier("nw")
-                turn_counter += 1
-                self.carrier_scan()
+                print("Enemy Carrier Location - " + str(self.enemy_carrier.xlocation) + ", " + str(self.enemy_carrier.ylocation))
+            elif command.lower() in possible_directions:
+                self.move_player_carrier(command.lower())
             else:
                 print("\nCommand not recognised. Please try again.\n")
 
-    
+    def move_player_carrier(self, direction):
+        next_xlocation = 0
+        next_ylocation = 0
+        if direction == "ne" or direction == "e" or direction == "se":
+            next_xlocation = self.player_carrier.xlocation+1
+        elif direction == "nw" or direction == "w" or direction == "sw":
+            next_xlocation = self.player_carrier.xlocation-1
+        if direction == "ne" or direction == "n" or direction == "nw":
+            next_ylocation = self.player_carrier.ylocation-1
+        if direction == "se" or direction == "s" or direction == "sw":
+            next_ylocation = self.player_carrier.ylocation+1
+        self.map_data.move_validity(next_xlocation, next_ylocation)
+        self.player_carrier.move_carrier(direction)
+        self.turn_counter += 1
+        self.carrier_scan()
 
     def carrier_scan(self):
         print("\nCarrier Scan\n")

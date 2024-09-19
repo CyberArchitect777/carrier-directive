@@ -58,7 +58,7 @@ class Map():
             return 1
         elif self.islands_list.does_location_contain_island(x_location, y_location):
             return 2
-        elif self.carrier_list[1].xlocation == x_location and self.carrier_list[1].ylocation == y_location:
+        elif (self.carrier_list.return_carrier(1)).xlocation == x_location and (self.carrier_list.return_carrier(1)).ylocation == y_location:
             return 3
         else:
             return 0
