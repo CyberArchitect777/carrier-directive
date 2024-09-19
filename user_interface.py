@@ -82,10 +82,18 @@ class UserInterface():
             next_ylocation = self.player_carrier.ylocation-1
         if direction == "se" or direction == "s" or direction == "sw":
             next_ylocation = self.player_carrier.ylocation+1
-        self.map_data.move_validity(next_xlocation, next_ylocation)
-        self.player_carrier.move_carrier(direction)
-        self.turn_counter += 1
-        self.carrier_scan()
+        validity_code = self.map_data.move_validity(next_xlocation, next_ylocation)
+        if validity_code == 1:
+            self.carrier_scan()
+            print("\nThis movement would take you out of the battle zone!\n")
+        elif validity_code == 2:
+            print("\nAn island is present here!\n")
+        elif validity_code == 3:
+            print("\nThis would ram the enemy carrier!\n")
+        else:
+            self.player_carrier.move_carrier(direction)
+            self.turn_counter += 1
+            self.carrier_scan()
 
     def carrier_scan(self):
         print("\nCarrier Scan\n")
