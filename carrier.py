@@ -1,4 +1,6 @@
 
+import random
+
 class Carrier():
     """
         Class representing an aircraft carrier in the game.
@@ -22,6 +24,27 @@ class Carrier():
         Return x and y locations of this carrier in two return parameters.
         """
         return self.xlocation, self.ylocation
+    
+    def launch_air_scout(self, island):
+        """
+        The carrier launches an air scout to an island in order to view the facilities and defenses on it
+        The following return codes might be used:
+        0 = No aircraft available for this
+        1 = Aircraft lost
+        2 = Aircraft succeeded, scouting information available.
+        """
+        if self.aircraft < 1:
+            return 0
+        else:
+            laser_turrents = island.return_number_features_by_type(3)
+            aa_guns = island.return_number_features_by_type(4)
+            risk_of_loss = (laser_turrents * 3) + (aa_guns * 10)
+            random_number = random.randint(0,99)
+            if risk_of_loss <= random_number:
+                self.aircraft -= 1
+                return 1
+            else:
+                return 2
     
     def move_carrier(self, direction):
         """

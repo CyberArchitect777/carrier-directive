@@ -73,6 +73,12 @@ class Island():
         """
 
         return self.features.return_feature_value_by_coords(x_location, y_location)
+    
+    def return_number_features_by_type(self, feature_type):
+        """
+        Returns count of the number of features found on this island with the type specified
+        """
+        return self.features.count_number_of_individual_features_by_type(feature_type)
 
     def provide_coords(self):
         """
