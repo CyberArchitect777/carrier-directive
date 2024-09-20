@@ -11,6 +11,16 @@ class Features():
         """
         self.features_list = [] # The features storage list
 
+    def count_number_of_individual_features_by_type(self, feature_type):
+        """
+        Return the number of the specified features found
+        """
+        counter = 0
+        for feature in self.features_list:
+            if feature.feature_number == feature_type:
+                counter += 1
+        return counter
+
     def add_feature(self, x_location, y_location, feature):
         """ 
         Add a fresh feature object to the features list
