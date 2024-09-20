@@ -38,8 +38,9 @@ class Map():
                 for y in range(ystartposition, ystartposition + scan_size):
                     if x < 0 or y < 0 or x > (self.OCEANSIZE-1) or y > (self.OCEANSIZE-1):
                         internal_map_data[x-xstartposition][y-ystartposition] = -1
-                    else:
-                        if island.does_island_exist_here(x, y):
+                    elif (self.carrier_list.return_carrier(1)).xlocation == x and (self.carrier_list.return_carrier(1)).ylocation == y:
+                            internal_map_data[x-xstartposition][y-ystartposition] = -2
+                    elif island.does_island_exist_here(x, y):
                             internal_map_data[x-xstartposition][y-ystartposition] = island.island_id
         
         return internal_map_data
