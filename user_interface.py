@@ -72,16 +72,16 @@ class UserInterface():
                 print("\nCommand not recognised. Please try again.\n")
 
     def move_player_carrier(self, direction):
-        next_xlocation = 0
-        next_ylocation = 0
+        next_xlocation = self.player_carrier.xlocation
+        next_ylocation = self.player_carrier.ylocation
         if direction == "ne" or direction == "e" or direction == "se":
-            next_xlocation = self.player_carrier.xlocation+1
+            next_xlocation += 1
         elif direction == "nw" or direction == "w" or direction == "sw":
-            next_xlocation = self.player_carrier.xlocation-1
+            next_xlocation -= 1
         if direction == "ne" or direction == "n" or direction == "nw":
-            next_ylocation = self.player_carrier.ylocation-1
+            next_ylocation -= 1
         if direction == "se" or direction == "s" or direction == "sw":
-            next_ylocation = self.player_carrier.ylocation+1
+            next_ylocation += 1
         validity_code = self.map_data.move_validity(next_xlocation, next_ylocation)
         if validity_code == 1:
             self.carrier_scan()
