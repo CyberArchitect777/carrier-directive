@@ -14,6 +14,8 @@ class Carrier():
         self.damage = 0
         self.fuel = 100
         self.supplies = 100
+        self.aircraft = 4
+        self.hovercraft = 4
 
     def return_carrier_location(self):
         """
@@ -31,7 +33,7 @@ class Carrier():
             self.xlocation += 1
             self.ylocation -= 1        
         elif direction == "e":
-            self.xlocation += 1        
+            self.xlocation += 1
         elif direction == "se":
             self.xlocation += 1
             self.ylocation += 1        
