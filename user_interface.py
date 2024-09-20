@@ -41,7 +41,8 @@ class UserInterface():
                 print("m0 - Save a basic island map to basicmap.txt")
                 print("m1 - Save an island ID linked map to islandmap.txt")
                 print("m2 - Save a basic island (with feature map) to islandfeaturemap.txt")
-                print("m3 - Save all maps available\n")
+                print("m3 - Save all maps available")
+                print("pm - Moves the player carrier to the location specified\n")
             elif command.lower() == "quit":
                 break
             elif command.lower() == "status":
@@ -66,6 +67,23 @@ class UserInterface():
                 print("Player Carrier Location - " + str(self.player_carrier.xlocation) + ", " + str(self.player_carrier.ylocation))
             elif command.lower() == "le":
                 print("Enemy Carrier Location - " + str(self.enemy_carrier.xlocation) + ", " + str(self.enemy_carrier.ylocation))
+            elif command.lower() == "pm":
+                print("\nPlease enter a new X location for the player carrier:")
+                new_x_pos = input()
+                print("\nPlease enter a new Y location for the player carrier:")
+                new_y_pos = input()
+                validity_code = self.map_data.move_validity(int(new_x_pos), int(new_y_pos))
+                if validity_code == 1:
+                    self.carrier_scan()
+                    print("\nInvalid location, out of the board!\n")
+                elif validity_code == 2:
+                    print("\nAn island is present here!\n")
+                elif validity_code == 3:
+                    print("\nThis is where the enemy carrier!\n")
+                else:
+                    self.player_carrier.xlocation = int(new_x_pos)
+                    self.player_carrier.ylocation = int(new_y_pos)
+                    self.carrier_scan()
             elif command.lower() in possible_directions:
                 self.move_player_carrier(command.lower())
             else:
