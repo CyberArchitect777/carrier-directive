@@ -26,6 +26,15 @@ class Islands():
                 return True
         return False
     
+    def return_island_by_id(self, island_number):
+        """
+        Returns an individual island if it matches the specified ID. Returns -1 if no island of that ID can be found
+        """
+        for island in self.islands_list:
+            if island.island_id == island_number:
+                return island
+        return None
+    
     def does_location_contain_island(self, x_pos, y_pos):
         """
         Iterates through all islands looking to see if any of them can be found at the passed location
