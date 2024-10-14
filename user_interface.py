@@ -34,6 +34,7 @@ class UserInterface():
                 print("n ne e se s sw w nw - Move carrier in respective compass directions")
                 print("status - Carrier status:")
                 print("scan - Scan local area")
+                print("is - Launches an aircraft to scout the nearby island")
                 print("quit - Quits the game")
                 print("\nDebug commands:\n")
                 print("lp - Show location for the player carrier")
@@ -53,6 +54,27 @@ class UserInterface():
                 print("Damage: " + str(self.player_carrier.damage) + "\n")
             elif command.lower() == "scan":
                 self.carrier_scan()
+            elif command.lower() == "is":
+                nearby_islands = self.get_islands_near_carrier()
+                if len(nearby_islands) > 1:
+                    print("\nThe following island numbers are in range, please select which one you want to scout: ")
+                    for current_island in nearby_islands:
+                        print("\n" + current_island.island_id)
+                    target_island = input()
+                    while target_island not in nearby_islands:
+                        print("\nThat island is not near your carrier, please try again:")
+                        target_island = input()
+                    self.player_carrier.launch_air_scout(self.islands_data.get_island_by_id(target_island))                       
+                elif len(nearby_islands) == 1:
+                    scout_result = self.player_carrier.launch_air_scout(nearby_islands[0])
+                    if scout_result == 0:
+                        print("\nYou have no aircraft available to scout this island.\n")
+                    elif scout_result == 1:
+                        print("\nYour air scout was unfortunately destroyed by defenses on the island. One aircraft was lost.\n")
+                    else:
+                        print("\nYour aircraft returned and you have data on the island available.\n")
+                else:
+                    print("\nThere are no islands near the carrier\n")
             elif command.lower() == "m0":
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
             elif command.lower() == "m1":
@@ -113,10 +135,13 @@ class UserInterface():
             self.turn_counter += 1
             self.carrier_scan()
 
+    def get_islands_near_carrier(self):
+        return self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation)
+
     def carrier_scan(self):
         print("\nCarrier Scan\n")
         print("Legend: C = Player Carrier, - = Water, I = Island, X = Out of Map Zone\n")
-        islands_near_carrier = self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation)
+        islands_near_carrier = self.get_islands_near_carrier()
         if len(islands_near_carrier) > 0:
             ISLAND_OWNER = [ "Unclaimed", "Player Claimed", "Enemy Claimed"]
             for island in islands_near_carrier:
