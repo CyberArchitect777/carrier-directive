@@ -61,7 +61,7 @@ class Island():
                             flag = True
                         elif (select_feature > 5):
                             if not self.features.does_feature_type_already_exist(select_feature):
-                                flag = True                    
+                                flag = True              
             island_coords = self.provide_coords()
             selected_island_location = random.randint(0, len(island_coords)-1)
             selected_xy_coords = island_coords[selected_island_location].split(",")

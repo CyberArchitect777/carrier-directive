@@ -28,7 +28,7 @@ class Islands():
     
     def return_island_by_id(self, island_number):
         """
-        Returns an individual island if it matches the specified ID. Returns -1 if no island of that ID can be found
+        Returns an individual island if it matches the specified ID. Returns None if no island of that ID can be found
         """
         for island in self.islands_list:
             if island.island_id == island_number:

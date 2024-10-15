@@ -55,24 +55,21 @@ class UserInterface():
             elif command.lower() == "scan":
                 self.carrier_scan()
             elif command.lower() == "is":
-                nearby_islands = self.get_islands_near_carrier()
-                if len(nearby_islands) > 1:
-                    print("\nThe following island numbers are in range, please select which one you want to scout: ")
-                    for current_island in nearby_islands:
-                        print("\n" + current_island.island_id)
+                nearby_island_ids = self.get_island_ids_near_carrier()
+                if len(nearby_island_ids) > 1:
+                    print("\nThe following island numbers are in range:-\n")
+                    for current_island_id in nearby_island_ids:
+                        print(str(current_island_id))
+                    print("\nPlease select which one you want to scout: ")
                     target_island = input()
-                    while target_island not in nearby_islands:
-                        print("\nThat island is not near your carrier, please try again:")
-                        target_island = input()
-                    self.player_carrier.launch_air_scout(self.islands_data.get_island_by_id(target_island))                       
-                elif len(nearby_islands) == 1:
-                    scout_result = self.player_carrier.launch_air_scout(nearby_islands[0])
-                    if scout_result == 0:
-                        print("\nYou have no aircraft available to scout this island.\n")
-                    elif scout_result == 1:
-                        print("\nYour air scout was unfortunately destroyed by defenses on the island. One aircraft was lost.\n")
+                    if int(target_island) in nearby_island_ids:
+                        scout_result = self.player_carrier.launch_air_scout(self.islands_data.return_island_by_id(int(target_island)))
+                        self.process_scout_result(scout_result)
                     else:
-                        print("\nYour aircraft returned and you have data on the island available.\n")
+                        print("\nThat island is not near your carrier, please try again:\n")                    
+                elif len(nearby_island_ids) == 1:
+                    scout_result = self.player_carrier.launch_air_scout(self.islands_data.return_island_by_id(nearby_island_ids[0]))
+                    self.process_scout_result(scout_result)
                 else:
                     print("\nThere are no islands near the carrier\n")
             elif command.lower() == "m0":
@@ -111,6 +108,14 @@ class UserInterface():
             else:
                 print("\nCommand not recognised. Please try again.\n")
 
+    def process_scout_result(self, scout_result):
+        if scout_result == 0:
+            print("\nYou have no aircraft available to scout this island.\n")
+        elif scout_result == 1:
+            print("\nYour air scout was unfortunately destroyed by defenses on the island. One aircraft was lost.\n")
+        else:
+            print("\nYour aircraft returned and you have data on the island available.\n")
+
     def move_player_carrier(self, direction):
         next_xlocation = self.player_carrier.xlocation
         next_ylocation = self.player_carrier.ylocation
@@ -136,7 +141,10 @@ class UserInterface():
             self.carrier_scan()
 
     def get_islands_near_carrier(self):
-        return self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation)
+        return self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation, False)
+    
+    def get_island_ids_near_carrier(self):
+        return self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation, True)
 
     def carrier_scan(self):
         print("\nCarrier Scan\n")
