@@ -23,3 +23,7 @@ This site was created using the following technologies:
 
 - The creators, developers and publishers of Carrier Command for the concept
 - ChatGPT for brainstorming on the concept of this text-based version.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
