@@ -55,8 +55,9 @@ class UserInterface():
             elif command.lower() == "scan":
                 self.carrier_scan()
             elif command.lower() == "is":
+                # Manage island scouting from the air
                 nearby_island_ids = self.get_island_ids_near_carrier()
-                if len(nearby_island_ids) > 1:
+                if len(nearby_island_ids) > 1: # If more than one island is detected
                     print("\nThe following island numbers are in range:-\n")
                     for current_island_id in nearby_island_ids:
                         print(str(current_island_id))
@@ -65,12 +66,12 @@ class UserInterface():
                     if int(target_island) in nearby_island_ids:
                         scout_result = self.player_carrier.launch_air_scout(self.islands_data.return_island_by_id(int(target_island)))
                         self.process_scout_result(scout_result)
-                    else:
+                    else: # Output if user specifies an island not in range
                         print("\nThat island is not near your carrier, please try again:\n")                    
-                elif len(nearby_island_ids) == 1:
+                elif len(nearby_island_ids) == 1: # Scouts the island if only one is in range
                     scout_result = self.player_carrier.launch_air_scout(self.islands_data.return_island_by_id(nearby_island_ids[0]))
                     self.process_scout_result(scout_result)
-                else:
+                else: # Output if no islands are in range
                     print("\nThere are no islands near the carrier\n")
             elif command.lower() == "m0":
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
@@ -82,16 +83,17 @@ class UserInterface():
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
                 map_data.write_island_map(1) # Draws a island ID linked map to islandmap.txt
                 map_data.write_island_map(2) # Draws a basic island (with feature map) to islandfeaturemap.txt
-            elif command.lower() == "lp":
+            elif command.lower() == "lp": # Shows player carrier location for debugging
                 print("Player Carrier Location - " + str(self.player_carrier.xlocation) + ", " + str(self.player_carrier.ylocation))
-            elif command.lower() == "le":
+            elif command.lower() == "le": # Shows enemy carrier location for debugging
                 print("Enemy Carrier Location - " + str(self.enemy_carrier.xlocation) + ", " + str(self.enemy_carrier.ylocation))
-            elif command.lower() == "pm":
+            elif command.lower() == "pm": # Allows the player carrier to be moved anywhere for debugging
                 print("\nPlease enter a new X location for the player carrier:")
                 new_x_pos = input()
                 print("\nPlease enter a new Y location for the player carrier:")
                 new_y_pos = input()
                 validity_code = self.map_data.move_validity(int(new_x_pos), int(new_y_pos))
+                # Checks to see if the new carrier location is valid
                 if validity_code == 1:
                     self.carrier_scan()
                     print("\nInvalid location, out of the board!\n")
@@ -103,12 +105,15 @@ class UserInterface():
                     self.player_carrier.xlocation = int(new_x_pos)
                     self.player_carrier.ylocation = int(new_y_pos)
                     self.carrier_scan()
-            elif command.lower() in possible_directions:
+            elif command.lower() in possible_directions: # Moves the carrier in the compass direction specified
                 self.move_player_carrier(command.lower())
-            else:
+            else: # Catchall for invalid command
                 print("\nCommand not recognised. Please try again.\n")
 
     def process_scout_result(self, scout_result):
+        """
+        Provides user output depending on the result of the island scout operation
+        """        
         if scout_result == 0:
             print("\nYou have no aircraft available to scout this island.\n")
         elif scout_result == 1:
