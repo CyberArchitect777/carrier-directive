@@ -58,7 +58,7 @@ class Carrier():
             aa_guns = island.return_number_features_by_type(4)
             risk_of_loss = (laser_turrents * 3) + (aa_guns * 10)
             random_number = random.randint(0,99)
-            if risk_of_loss <= random_number:
+            if risk_of_loss >= random_number:
                 self.aircraft -= 1
                 return 1
             else:
