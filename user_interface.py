@@ -125,7 +125,7 @@ class UserInterface():
                     self.carrier_scan()
             elif command.lower() in possible_directions: # Moves the carrier in the compass direction specified
                 self.move_player_carrier(command.lower())
-            else: # Catchall for invalid command
+            else: # Catch-all for invalid command
                 print("\nCommand not recognised. Please try again.\n")
 
     def process_scout_result(self, scout_result):
@@ -140,6 +140,9 @@ class UserInterface():
             print("\nYour aircraft returned and you have data on the island available.\n")
 
     def move_player_carrier(self, direction):
+        """
+        Handles the interface manipulation of the player carrier by normal compass means
+        """
         next_xlocation = self.player_carrier.xlocation
         next_ylocation = self.player_carrier.ylocation
         if direction == "ne" or direction == "e" or direction == "se":
@@ -150,6 +153,7 @@ class UserInterface():
             next_ylocation -= 1
         if direction == "se" or direction == "s" or direction == "sw":
             next_ylocation += 1
+        # Checks if the new location is valid for the carrier
         validity_code = self.map_data.move_validity(next_xlocation, next_ylocation)
         if validity_code == 1:
             self.carrier_scan()
@@ -164,14 +168,24 @@ class UserInterface():
             self.carrier_scan()
 
     def get_islands_near_carrier(self):
+        """
+        Returns the islands that are near the player carrier
+        """
         return self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation, False)
     
     def get_island_ids_near_carrier(self):
+        """
+        Returns the island id's that are near the player carrier
+        """
         return self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation, True)
 
     def carrier_scan(self):
+        """
+        Provides a user interface scan output for the area around the carrier        
+        """
         print("\nCarrier Scan\n")
         print("Legend: C = Player Carrier, - = Water, I = Island, X = Out of Map Zone\n")
+        # Identifies the islands next to the carrier location
         islands_near_carrier = self.get_islands_near_carrier()
         if len(islands_near_carrier) > 0:
             ISLAND_OWNER = [ "Unclaimed", "Player Claimed", "Enemy Claimed"]
@@ -181,6 +195,7 @@ class UserInterface():
         scanned_map = self.map_data.graphical_scan_from_carrier(self.map_data.return_carrier(0), scan_radius)
         # Create a array of the specified size full of empty strings
         map_graphical_data = numpy.full(((scan_radius * 2) + 1, (scan_radius * 2) + 1), "", dtype=str)
+        # Draws a map of the current scan radius with the carrier in the middle
         for x in range((scan_radius * 2) + 1):
             for y in range((scan_radius * 2) + 1):
                 if (x == scan_radius) and (y == scan_radius):
