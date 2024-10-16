@@ -23,6 +23,9 @@ from carriers import *
 
 class Map():
     def __init__(self, OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE):
+        """
+        Sets up a new map and starts the generation of all content to be found in it
+        """
         # Creates an islands object and assigns it to the value below
         self.islands_list = Islands(OCEANSIZE, ISLANDS, ISLAND_MIN_SIZE, ISLAND_MAX_SIZE)
         self.OCEANSIZE = OCEANSIZE

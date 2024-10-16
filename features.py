@@ -50,7 +50,6 @@ class Features():
         Returns a single feature value from the Feature object associated with the passed x, y coordinates
         Returns 1 if not found
         """
-
         feature_value = 1
         for feature_object in self.features_list:
             if (x_location == feature_object.x_location) and (y_location == feature_object.y_location):
@@ -58,6 +57,9 @@ class Features():
         return feature_value
     
     def does_feature_type_already_exist(self, feature_type):
+        """
+        Checks to see if a feature specified exists
+        """
         for feature in self.features_list:
             if feature == feature_type:
                 return True
