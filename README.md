@@ -18,15 +18,15 @@ However, to run the game in the current form, the following can be done.
 - Create a new directory and open a command-line terminal in this location. 
 - Run the following to download this game repository:-
 
-        git clone https://github.com/CyberArchitect777/carrier-directive.git
+    `git clone https://github.com/CyberArchitect777/carrier-directive.git`
 
 - The game uses the numpy library and this will need to be imported before playing. This can often be done from the command-line as follows, but different instructions may be needed based on the operating system and interpreter used.
 
-        pip install numpy
+    `pip install numpy`
 
 - From the project directory, run the following to start the game:
 
-        python3 carrier_directive.py
+    `python3 carrier_directive.py`
 
 ## Repository
 

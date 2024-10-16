@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import random
+import numpy, random
 from features import *
 
 class Island():
@@ -84,6 +84,17 @@ class Island():
             selected_island_location = random.randint(0, len(island_coords)-1)
             selected_xy_coords = island_coords[selected_island_location].split(",")
             self.features.add_feature(selected_xy_coords[0], selected_xy_coords[1], select_feature)
+
+    def return_island_makeup_for_mapping(self):
+        """
+        Return the makeup of the island including all features
+        """
+        island_map = numpy.zeros((int(self.size), int(self.size))) # Generate an empty island map
+        for feature in self.features:
+            relative_x = feature.x_location - self.xstartlocation
+            relative_y = feature.y_location - self.xstartlocation
+            island_map[relative_x][relative_y] = feature.feature_number
+        return island_map
 
     def return_feature_value_by_coord(self, x_location, y_location):
         """
