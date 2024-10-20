@@ -29,6 +29,12 @@ class Features():
         """
         self.features_list = [] # The features storage list
 
+    def return_list_of_all_feature_objects(self):
+        """
+        Returns a list of all feature objects
+        """
+        return self.features_list
+
     def count_number_of_individual_features_by_type(self, feature_type):
         """
         Return the number of the specified features found
