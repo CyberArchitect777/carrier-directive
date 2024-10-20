@@ -83,12 +83,14 @@ class UserInterface():
                     target_island = input()
                     if int(target_island) in nearby_island_ids:
                         scout_result = self.player_carrier.launch_air_scout(self.islands_data.return_island_by_id(int(target_island)))
-                        self.process_scout_result(scout_result)
+                        island_scan = (self.islands_data.return_island_by_id(int(target_island))).return_island_makeup_for_mapping()
+                        self.process_scout_result(scout_result, island_scan)
                     else: # Output if user specifies an island not in range
                         print("\nThat island is not near your carrier, please try again:\n")                    
                 elif len(nearby_island_ids) == 1: # Scouts the island if only one is in range
                     scout_result = self.player_carrier.launch_air_scout(self.islands_data.return_island_by_id(nearby_island_ids[0]))
-                    self.process_scout_result(scout_result)
+                    island_scan = (self.islands_data.return_island_by_id(int(nearby_island_ids[0]))).return_island_makeup_for_mapping()
+                    self.process_scout_result(scout_result, island_scan)
                 else: # Output if no islands are in range
                     print("\nThere are no islands near the carrier\n")
             elif command.lower() == "m0":
@@ -128,7 +130,7 @@ class UserInterface():
             else: # Catch-all for invalid command
                 print("\nCommand not recognised. Please try again.\n")
 
-    def process_scout_result(self, scout_result):
+    def process_scout_result(self, scout_result, island_data):
         """
         Provides user output depending on the result of the island scout operation
         """        
@@ -138,6 +140,29 @@ class UserInterface():
             print("\nYour air scout was unfortunately destroyed by defenses on the island. One aircraft was lost.\n")
         else:
             print("\nYour aircraft returned and you have data on the island available.\n")
+            print("\nLegend: - = Empty Island Space, C = Command Center, T = Laser Turret, A = Anti-Aircraft Guns")
+            print("        L = Rocket Launchers, D = Drone Base, R = Radar Systems, F = Fuel Depot, W = Materials Warehouse\n")
+            for x in range(len(island_data[0])):
+                for y in range(len(island_data[0])):
+                    if island_data[y][x] == 0:
+                        print("- ", end="")
+                    if island_data[y][x] == 2:
+                        print("C ", end="")
+                    if island_data[y][x] == 3:
+                        print("T ", end="")
+                    if island_data[y][x] == 4:
+                        print("A ", end="")
+                    if island_data[y][x] == 5:
+                        print("L ", end="")
+                    if island_data[y][x] == 6:
+                        print("D ", end="")
+                    if island_data[y][x] == 7:
+                        print("R ", end="")
+                    if island_data[y][x] == 8:
+                        print("F ", end="")
+                    if island_data[y][x] == 9:
+                        print("W ", end="")                    
+                print("\n")
 
     def move_player_carrier(self, direction):
         """
