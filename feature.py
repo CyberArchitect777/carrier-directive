@@ -19,12 +19,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 class Feature():
     """
-        Class representing an island feature
+    Class representing an island feature
     """
 
     def __init__(self, x_location, y_location, feature_number):
         """
-            Imports the required values for a fresh feature
+        Imports the required values for a fresh feature
         """
         self.x_location = x_location
         self.y_location = y_location
@@ -38,3 +38,10 @@ class Feature():
         # 7 - Radar systems
         # 8 - Fuel depot
         # 9 - Materials warehouse
+
+    def return_relative_island_location(self, x_island_start_location, y_island_start_location):
+        """
+        Returns the relative coordinates of the feature using the top-left island 
+        coordinates provided for reference
+        """
+        return int(self.x_location)-int(x_island_start_location), int(self.y_location)-int(y_island_start_location)

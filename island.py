@@ -92,8 +92,7 @@ class Island():
         island_map = numpy.zeros((int(self.size), int(self.size))) # Generate an empty island map
         featurelist = self.features.return_list_of_all_feature_objects()
         for feature in featurelist:
-            relative_x = int(feature.x_location) - int(self.xstartlocation)
-            relative_y = int(feature.y_location) - int(self.ystartlocation)
+            relative_x, relative_y = feature.return_relative_island_location(self.xstartlocation, self.ystartlocation)
             island_map[relative_x][relative_y] = feature.feature_number
         return island_map
 
