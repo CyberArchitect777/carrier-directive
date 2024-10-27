@@ -62,6 +62,19 @@ class Features():
                 feature_value = feature_object.feature_number
         return feature_value
     
+    def return_relative_feature_value_by_coords(self, x_location, y_location, x_islandstart, y_islandstart):
+        """
+        Returns a single feature value from the Feature object based on the relative x, y coordinates required 
+        as compared to the island's top-left coordinate
+        Returns 1 if not found
+        """
+        feature_value = 1
+        for feature_object in self.features_list:
+            relative_x, relative_y = feature_object.return_relative_island_location(x_islandstart, y_islandstart)
+            if (x_location == relative_x) and (y_location == relative_y):
+                feature_value = feature_object.feature_number
+        return feature_value
+    
     def does_feature_type_already_exist(self, feature_type):
         """
         Checks to see if a feature specified exists

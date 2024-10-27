@@ -85,6 +85,50 @@ class Island():
             selected_xy_coords = island_coords[selected_island_location].split(",")
             self.features.add_feature(selected_xy_coords[0], selected_xy_coords[1], select_feature)
 
+    def island_attack(self, direction, craft):
+        """
+        Calculates the effect of an attack on an island based on direction
+        and craft used. Features are disabled as needed
+        """
+        random_number = random.randInt(0,1)
+        if direction == "north" or direction == "south":
+            if random_number == 0:
+                x_start = 0
+                x_end = self.island.size
+            else:
+                x_start = self.island.size
+                x_end = 0
+            if direction == "north":
+                y_start = self.island.size
+                y_end = 0
+            else:
+                y_start = 0
+                y_end = self.island.size
+        else:
+            if random_number == 0:
+                y_start = 0
+                y_end = self.island.size
+            else:
+                y_start = self.island.size
+                y_end = 0
+            if direction == "east":
+                x_start = self.island.size
+                x_end = 0
+            else:
+                x_start = 0
+                x_end = self.island.size
+        if direction == "north" or direction == "south":
+            for y in range(y_start, y_end):
+                for x in range(x_start, x_end):
+                    pass
+                pass
+
+    def square_attacked(self, relative_x_location, relative_y_location, craft_used):
+        """
+        Return the result of an attack on a specific square on the island
+        """
+        feature_value_found = self.features.return_relative_feature_value_by_coords(self, relative_x_location, relative_y_location, self.xstartlocation, self.ystartlocation)
+
     def return_island_makeup_for_mapping(self):
         """
         Return the makeup of the island including all features
