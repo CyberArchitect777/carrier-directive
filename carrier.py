@@ -65,19 +65,29 @@ class Carrier():
             else:
                 return 2
             
-    def launch_air_attack(self, island, direction):
+    def launch_attack(self, island, direction, air_used):
         """
-        The carrier launches an air attack on the island from the direction specified.
+        The carrier launches an attack on the island from the direction specified.
         The directions can be one of: n, s, w, e
+        If air_used is True, an air attack is launched. 
+        If False, a ground attack is.
         The following return codes might be used:
         0 = No aircraft available for this
         1 = Aircraft lost
         2 = Aircraft succeeded, scouting information available.
         """
-        if self.aircraft < 1:
+        if (air_used == True and self.aircraft < 1) or (air_used == False and self.hovercraft < 1):
             return 0
         else:
-            island.island_attack(direction)
+            if island.island_attack(direction, air_used) == False:
+                if (air_used == True):
+                    self.aircraft -= 1
+                else:
+                    self.hovercraft -=1
+                return 1
+            else:
+                return 2
+
     
     def move_carrier(self, direction):
         """

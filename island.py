@@ -85,10 +85,11 @@ class Island():
             selected_xy_coords = island_coords[selected_island_location].split(",")
             self.features.add_feature(selected_xy_coords[0], selected_xy_coords[1], select_feature)
 
-    def island_attack(self, direction, craft):
+    def island_attack(self, direction, air_used):
         """
         Calculates the effect of an attack on an island based on direction
-        and craft used. Features are disabled as needed
+        and craft used. Features are disabled as needed.
+        Returns False if the attack craft was destroyed, True if it survived
         """
         random_number = random.randInt(0,1)
         if direction == "north" or direction == "south":
@@ -120,14 +121,44 @@ class Island():
         if direction == "north" or direction == "south":
             for y in range(y_start, y_end):
                 for x in range(x_start, x_end):
-                    pass
-                pass
+                    outcome = self.square_attacked(x, y, air_used)
+                    if outcome == False:
+                        return False
+        else:
+            for x in range(x_start, x_end):
+                for y in range(y_start, y_end):
+                    outcome = self.square_attacked(x, y, air_used)
+                    if outcome == False:
+                        return False
+        return True
 
-    def square_attacked(self, relative_x_location, relative_y_location, craft_used):
+    def square_attacked(self, relative_x_location, relative_y_location, air_used):
         """
         Return the result of an attack on a specific square on the island
+        Air_used = false for hovercraft or true for aircraft
+        Returns True if the attack craft survived or False if it was destroyed
         """
+        risk_of_defeat = 0
         feature_value_found = self.features.return_relative_feature_value_by_coords(self, relative_x_location, relative_y_location, self.xstartlocation, self.ystartlocation)
+        if air_used == True:
+            # Laser turret or drone base
+            if feature_value_found == 3 or feature_value_found == 6 :
+                risk_of_defeat = 25
+            elif feature_value_found == 4: # Anti-aircraft guns
+                risk_of_defeat = 50
+        else:
+            # Laser turret or drone base
+            if feature_value_found == 3 or feature_value_found == 6: # Laser turret
+                risk_of_defeat = 25
+            elif feature_value_found == 5: # Rocket Launchers
+                risk_of_defeat = 50
+        random_number = random.randint(0,99)
+        if random_number >= risk_of_defeat:
+            # Attack succeeded
+            self.features.delete_relative_feature_value_by_coords(self, relative_x_location, relative_y_location, self.xstartlocation, self.ystartlocation)
+            return False
+        else:
+            return True
 
     def return_island_makeup_for_mapping(self):
         """
