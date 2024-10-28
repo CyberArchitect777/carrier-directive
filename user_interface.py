@@ -192,6 +192,7 @@ class UserInterface():
         else:
             self.player_carrier.move_carrier(direction)
             self.turn_counter += 1
+            self.player_carrier.fuel -= 1
             self.carrier_scan()
 
     def get_islands_near_carrier(self):
