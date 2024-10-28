@@ -37,6 +37,18 @@ class Carrier():
         self.aircraft = 4
         self.hovercraft = 4
 
+    def get_islands_near_carrier(self, islands):
+        """
+        Returns the islands that are near the carrier
+        """
+        return islands.output_islands_near_location(self.xlocation, self.ylocation, False)
+    
+    def get_island_ids_near_carrier(self, islands):
+        """
+        Returns the island id's that are near the carrier
+        """
+        return islands.output_islands_near_location(self.xlocation, self.ylocation, True)
+    
     def return_carrier_location(self):
         """
         Return x and y locations of this carrier in two return parameters.

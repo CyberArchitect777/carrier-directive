@@ -76,7 +76,7 @@ class UserInterface():
                 self.carrier_scan()
             elif command.lower() == "is":
                 # Manage island scouting from the air
-                nearby_island_ids = self.get_island_ids_near_carrier()
+                nearby_island_ids = self.player_carrier.get_island_ids_near_carrier(self.islands_data)
                 if len(nearby_island_ids) > 1: # If more than one island is detected
                     print("\nThe following island numbers are in range:-\n")
                     for current_island_id in nearby_island_ids:
@@ -195,18 +195,6 @@ class UserInterface():
             self.player_carrier.fuel -= 1
             self.carrier_scan()
 
-    def get_islands_near_carrier(self):
-        """
-        Returns the islands that are near the player carrier
-        """
-        return self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation, False)
-    
-    def get_island_ids_near_carrier(self):
-        """
-        Returns the island id's that are near the player carrier
-        """
-        return self.islands_data.output_islands_near_location(self.map_data.return_carrier(0).xlocation, self.map_data.return_carrier(0).ylocation, True)
-
     def carrier_scan(self):
         """
         Provides a user interface scan output for the area around the carrier        
@@ -214,7 +202,7 @@ class UserInterface():
         print("\nCarrier Scan\n")
         print("Legend: C = Player Carrier, - = Water, I = Island, X = Out of Map Zone\n")
         # Identifies the islands next to the carrier location
-        islands_near_carrier = self.get_islands_near_carrier()
+        islands_near_carrier = self.player_carrier.get_islands_near_carrier(self.islands_data)
         if len(islands_near_carrier) > 0:
             ISLAND_OWNER = [ "Unclaimed", "Player Claimed", "Enemy Claimed"]
             for island in islands_near_carrier:
