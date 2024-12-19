@@ -84,9 +84,9 @@ class Carrier():
         If air_used is True, an air attack is launched. 
         If False, a ground attack is.
         The following return codes might be used:
-        0 = No aircraft available for this
-        1 = Aircraft lost
-        2 = Aircraft succeeded, scouting information available.
+        0 = No selected craft available for this attack
+        1 = Attacking craft lost
+        2 = Attacking craft succeeded
         """
         if (air_used == True and self.aircraft < 1) or (air_used == False and self.hovercraft < 1):
             return 0
@@ -100,7 +100,6 @@ class Carrier():
             else:
                 return 2
 
-    
     def move_carrier(self, direction):
         """
         Move the carrier in a direction specified by a string based on abbreviated compass directions
