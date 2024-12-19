@@ -78,12 +78,8 @@ class UserInterface():
                 # Manage island scouting from the air
                 nearby_island_ids = self.player_carrier.get_island_ids_near_carrier(self.islands_data)
                 if len(nearby_island_ids) > 1: # If more than one island is detected
-                    print("\nThe following island numbers are in range:-\n")
-                    for current_island_id in nearby_island_ids:
-                        print(str(current_island_id))
-                    print("\nPlease select which one you want to scout: ")
-                    target_island = input()
-                    if int(target_island) in nearby_island_ids:
+                    island_selected = self.determine_correct_island(nearby_island_ids)
+                    if island_selected != None:
                         scout_result = self.player_carrier.launch_air_scout(self.islands_data.return_island_by_id(int(target_island)))
                         island_scan = (self.islands_data.return_island_by_id(int(target_island))).return_island_makeup_for_mapping()
                         self.process_scout_result(scout_result, island_scan)
@@ -132,6 +128,21 @@ class UserInterface():
             else: # Catch-all for invalid command
                 print("\nCommand not recognised. Please try again.\n")
 
+    def determine_correct_island(self, nearby_island_ids):
+        """
+        Determines which carrier the user wants to scout/attack if more than one is in range.
+        Returns the apropriate island to the calling code or None if the user specifies an invalid island
+        """
+        print("\nThe following island numbers are in range:-\n")
+        for current_island_id in nearby_island_ids:
+            print(str(current_island_id))
+        print("\nPlease select which one you want to scout: ")
+        target_island = input()
+        if int(target_island) in nearby_island_ids:
+            return self.islands_data.return_island_by_id(int(target_island))
+        else: # Output if user specifies an island not in range
+            return None
+    
     def process_scout_result(self, scout_result, island_data):
         """
         Provides user output depending on the result of the island scout operation
