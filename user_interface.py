@@ -80,8 +80,8 @@ class UserInterface():
                 if len(nearby_island_ids) > 1: # If more than one island is detected
                     island_selected = self.determine_correct_island(nearby_island_ids)
                     if island_selected != None:
-                        scout_result = self.player_carrier.launch_air_scout(self.islands_data.return_island_by_id(int(target_island)))
-                        island_scan = (self.islands_data.return_island_by_id(int(target_island))).return_island_makeup_for_mapping()
+                        scout_result = self.player_carrier.launch_air_scout(island_selected)
+                        island_scan = island_selected.return_island_makeup_for_mapping()
                         self.process_scout_result(scout_result, island_scan)
                     else: # Output if user specifies an island not in range
                         print("\nThat island is not near your carrier, please try again:\n")                    
