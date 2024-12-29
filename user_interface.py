@@ -83,9 +83,10 @@ class UserInterface():
             elif command.lower() == "is":
                 # Manage island scouting from the air
                 island_selected = self.determine_correct_nearby_island()
-                scout_result = self.player_carrier.launch_air_scout(island_selected)
-                island_scan = island_selected.return_island_makeup_for_mapping()
-                self.process_scout_result(scout_result, island_scan)
+                if island_selected != None:
+                    scout_result = self.player_carrier.launch_air_scout(island_selected)
+                    island_scan = island_selected.return_island_makeup_for_mapping()
+                    self.process_scout_result(scout_result, island_scan)
             elif command.lower() == "m0":
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
             elif command.lower() == "m1":
