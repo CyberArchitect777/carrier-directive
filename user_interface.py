@@ -54,6 +54,8 @@ class UserInterface():
                 print("scan - Scan local area")
                 print("\nIsland attack commands\n")
                 print("is - Launches an aircraft to scout the nearby island")
+                print("aa - Launches an aircraft attack on the nearby island")
+                print("ga - Launches an hovercraft attack on the nearby island")
                 print("\nGeneral game commands\n")
                 print("quit - Quits the game")
                 print("\nDebug commands for development:\n")
@@ -76,10 +78,30 @@ class UserInterface():
                 self.carrier_scan()
             elif command.lower() == "aa":
                 # Launch an air attack on the island
-                pass
+                island_selected = self.determine_correct_nearby_island()
+                if island_selected != None:
+                    attack_direction = self.determine_attack_direction()
+                    if attack_direction != None:
+                        attack_output = self.player_carrier.launch_attack(island_selected, attack_direction, True)
+                        if attack_output == 0:
+                            print("\nThere is no aircraft available for this attack")
+                        elif attack_output == 1:
+                            print("\nThe attack failed and the aircraft has been lost")
+                        else:
+                            print("\nThe attack succeeded and an island defense has been destroyed")
             elif command.lower() == "ga":
                 # Launch a ground attack on the island
-                pass
+                island_selected = self.determine_correct_nearby_island()
+                if island_selected != None:
+                    attack_direction = self.determine_attack_direction()
+                    if attack_direction != None:
+                        attack_output = self.player_carrier.launch_attack(island_selected, attack_direction, False)
+                        if attack_output == 0:
+                            print("\nThere is no hovercraft available for this attack")
+                        elif attack_output == 1:
+                            print("\nThe attack failed and the hovercraft has been lost")
+                        else:
+                            print("\nThe attack succeeded and an island defense has been destroyed")
             elif command.lower() == "is":
                 # Manage island scouting from the air
                 island_selected = self.determine_correct_nearby_island()
@@ -123,6 +145,21 @@ class UserInterface():
                 self.move_player_carrier(command.lower())
             else: # Catch-all for invalid command
                 print("\nCommand not recognised. Please try again.\n")
+
+    def determine_attack_direction(self):
+        """
+        Determine which compass direction is used for an air or ground attack.
+        N, S, E, W are acceptable values for returning
+        """
+        print("\nWhich direction do you want to launch the attack from")
+        print("\nNorth, South, East or West (N, S, E, W):")
+        direction = input()
+        correct_selections = [ "north", "south", "east", "west", "n", "s", "e", "w"]
+        if direction.lower() in correct_selections:
+            return direction[0].lower()
+        else:
+            print("\n\nThat is an invalid direction, please try again.")
+            return None        
 
     def determine_correct_nearby_island(self):
         """
