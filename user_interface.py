@@ -87,9 +87,13 @@ class UserInterface():
                         if craft_status == 0:
                             print("\nThere is no aircraft available for this attack")
                         elif craft_status == 1:
-                            print("\n" + str(attack_output) + " defenses were destroyed. However, the aircraft was lost")
+                            print("\n" + str(attack_output) + " defenses were destroyed. However, the aircraft was lost\n")
                         else:
-                            print("\n" + str(attack_output) + " defenses were destroyed. The aircraft safely returned to the carrier")
+                            print("\n" + str(attack_output) + " defenses were destroyed. The aircraft safely returned to the carrier\n")
+                        if craft_status > 0:
+                            print("Current island status:\n")
+                            island_scan = island_selected.return_island_makeup_for_mapping()        
+                            self.process_scout_result(2, island_scan, True)
             elif command.lower() == "ga":
                 # Launch a ground attack on the island
                 island_selected = self.determine_correct_nearby_island()
@@ -100,16 +104,20 @@ class UserInterface():
                         if craft_status == 0:
                             print("\nThere is no hovercraft available for this attack")
                         elif craft_status == 1:
-                            print("\n" + str(attack_output) + " defenses were destroyed. However, the hovercraft was lost")
+                            print("\n" + str(attack_output) + " defenses were destroyed. However, the hovercraft was lost\n")
                         else:
-                            print("\n" + str(attack_output) + " defenses were destroyed. The hovercraft safely returned to the carrier")
+                            print("\n" + str(attack_output) + " defenses were destroyed. The hovercraft safely returned to the carrier\n")
+                        if craft_status > 0:
+                            print("Current island status:\n")
+                            island_scan = island_selected.return_island_makeup_for_mapping()        
+                            self.process_scout_result(2, island_scan, True)
             elif command.lower() == "is":
                 # Manage island scouting from the air
                 island_selected = self.determine_correct_nearby_island()
                 if island_selected != None:
                     scout_result = self.player_carrier.launch_air_scout(island_selected)
                     island_scan = island_selected.return_island_makeup_for_mapping()
-                    self.process_scout_result(scout_result, island_scan)
+                    self.process_scout_result(scout_result, island_scan, False)
             elif command.lower() == "m0":
                 map_data.write_island_map(0) # Draws a basic island map to basicmap.txt
             elif command.lower() == "m1":
@@ -188,16 +196,20 @@ class UserInterface():
             print("\nThere are no islands near the carrier\n")
         return island_selected
 
-    def process_scout_result(self, scout_result, island_data):
+    def process_scout_result(self, scout_result, island_data, automatic):
         """
         Provides user output depending on the result of the island scout operation
+
+        Automatic = Determines if this is a real scout from a user command or one #
+        with details after a direct attack
         """        
-        if scout_result == 0:
+        if scout_result == 0 and automatic == False:
             print("\nYou have no aircraft available to scout this island.\n")
-        elif scout_result == 1:
+        elif scout_result == 1 and automatic == False:
             print("\nYour air scout was unfortunately destroyed by defenses on the island. One aircraft was lost.\n")
         else:
-            print("\nYour aircraft returned and you have data on the island available.\n")
+            if automatic == False:
+                print("\nYour aircraft returned and you have data on the island available.\n")
             print("\nLegend: - = Empty Island Space, C = Command Center, T = Laser Turret, A = Anti-Aircraft Guns")
             print("        L = Rocket Launchers, D = Drone Base, R = Radar Systems, F = Fuel Depot, W = Materials Warehouse\n")
             for x in range(len(island_data[0])):
