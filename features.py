@@ -82,10 +82,13 @@ class Features():
         """
         feature_index = -1
         for index, feature_object in enumerate(self.features_list):
+            print("Scanning features for deletion - " + str(index))
             relative_x, relative_y = feature_object.return_relative_island_location(x_islandstart, y_islandstart)
+            print("Features list " + str(index) + " at X " + str(feature_object.x_location) + " and Y " + str(feature_object.y_location) + " - " + str(feature_object.feature_number))
             if (x_location == relative_x) and (y_location == relative_y):
                 feature_index = index
         del self.features_list[feature_index]
+        print("Feature deleted - " + str(feature_index))
     
     def does_feature_type_already_exist(self, feature_type):
         """

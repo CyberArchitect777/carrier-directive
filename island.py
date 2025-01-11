@@ -91,74 +91,104 @@ class Island():
         and craft used. Features are disabled as needed.
         Returns False if the attack craft was destroyed, True if it survived
         """
-        random_number = random.randInt(0,1)
-        if direction == "north" or direction == "south":
+        print("Direction" + direction)
+        random_number = random.randint(0,1)
+        features_destroyed = 0
+        # Dictates if the later loops should go forwards through values or backwards
+        x_loop_direction = 1
+        y_loop_direction = 1
+        if direction == "n" or direction == "s":
             if random_number == 0:
                 x_start = 0
-                x_end = self.island.size
+                x_end = self.size
+                x_loop_direction = 1
             else:
-                x_start = self.island.size
-                x_end = 0
-            if direction == "north":
-                y_start = self.island.size
-                y_end = 0
-            else:
+                x_start = (self.size-1)
+                x_end = -1
+                x_loop_direction = -1
+            if direction == "n":
                 y_start = 0
-                y_end = self.island.size
+                y_end = self.size
+                y_loop_direction = 1
+            else:
+                y_start = (self.size-1)
+                y_end = -1
+                y_loop_direction = -1
         else:
             if random_number == 0:
                 y_start = 0
-                y_end = self.island.size
+                y_end = self.size
+                y_loop_direction = 1
             else:
-                y_start = self.island.size
-                y_end = 0
-            if direction == "east":
-                x_start = self.island.size
-                x_end = 0
+                y_start = (self.size-1)
+                y_end = -1
+                y_loop_direction = -1
+            if direction == "e":
+                x_start = (self.size-1)
+                x_end = -1
+                x_loop_direction = -1
             else:
                 x_start = 0
-                x_end = self.island.size
-        if direction == "north" or direction == "south":
-            for y in range(y_start, y_end):
-                for x in range(x_start, x_end):
-                    outcome = self.square_attacked(x, y, air_used)
-                    if outcome == False:
-                        return False
+                x_end = self.size
+                x_loop_direction = 1
+        print("Attack X-Start - " + str(x_start) + " - " + str(x_end) + " - " + str(x_loop_direction))
+        print("Attack Y-Start - " + str(y_start) + " - " + str(y_end) + " - " + str(y_loop_direction))
+        if direction == "n" or direction == "s":
+            for y in range(y_start, y_end, y_loop_direction):
+                for x in range(x_start, x_end, x_loop_direction):
+                    feature_value_found = self.features.return_relative_feature_value_by_coords(x, y, self.xstartlocation, self.ystartlocation)
+                    print("Feature value found - " + str(feature_value_found))
+                    print("Scanning Square - " + str(x) + " - " + str(y))
+                    if feature_value_found != 1 and feature_value_found != 2 and feature_value_found != 8 and feature_value_found != 9:
+                        print("Square Attacked" + str(x) + " - " + str(y))
+                        outcome = self.square_attacked(x, y, feature_value_found, air_used)
+                        if outcome == False:
+                            return False, features_destroyed
+                        else:
+                            features_destroyed += 1
         else:
-            for x in range(x_start, x_end):
-                for y in range(y_start, y_end):
-                    outcome = self.square_attacked(x, y, air_used)
-                    if outcome == False:
-                        return False
-        return True
+            for x in range(x_start, x_end, x_loop_direction):
+                for y in range(y_start, y_end, y_loop_direction):
+                    feature_value_found = self.features.return_relative_feature_value_by_coords(x, y, self.xstartlocation, self.ystartlocation)
+                    print("Feature value found - " + str(feature_value_found))
+                    # Only attack this square if it does not match a given excluded type
+                    if feature_value_found != 1 and feature_value_found != 2 and feature_value_found != 8 and feature_value_found != 9:
+                        print("Square Attacked" + str(x) + " - " + str(y))
+                        outcome = self.square_attacked(x, y, feature_value_found, air_used)
+                        if outcome == False:
+                            return False, features_destroyed
+                        else:
+                            features_destroyed += 1
+        return True, features_destroyed
 
-    def square_attacked(self, relative_x_location, relative_y_location, air_used):
+    def square_attacked(self, relative_x_location, relative_y_location, feature_number, air_used):
         """
         Return the result of an attack on a specific square on the island
         Air_used = false for hovercraft or true for aircraft
         Returns True if the attack craft survived or False if it was destroyed
         """
         risk_of_defeat = 0
-        feature_value_found = self.features.return_relative_feature_value_by_coords(self, relative_x_location, relative_y_location, self.xstartlocation, self.ystartlocation)
         if air_used == True:
             # Laser turret or drone base
-            if feature_value_found == 3 or feature_value_found == 6 :
+            if feature_number == 3 or feature_number == 6 :
                 risk_of_defeat = 25
-            elif feature_value_found == 4: # Anti-aircraft guns
+            elif feature_number == 4: # Anti-aircraft guns
                 risk_of_defeat = 50
         else:
             # Laser turret or drone base
-            if feature_value_found == 3 or feature_value_found == 6: # Laser turret
+            if feature_number == 3 or feature_number == 6: # Laser turret
                 risk_of_defeat = 25
-            elif feature_value_found == 5: # Rocket Launchers
+            elif feature_number == 5: # Rocket Launchers
                 risk_of_defeat = 50
         random_number = random.randint(0,99)
+        print("Square Attack - " + str(random_number) + " - " + str(risk_of_defeat))
         if random_number >= risk_of_defeat:
             # Attack succeeded
-            self.features.delete_relative_feature_value_by_coords(self, relative_x_location, relative_y_location, self.xstartlocation, self.ystartlocation)
-            return False
-        else:
+            self.features.delete_relative_feature_value_by_coords(relative_x_location, relative_y_location, self.xstartlocation, self.ystartlocation)
             return True
+        else:
+            return False
+        return True
 
     def return_island_makeup_for_mapping(self):
         """

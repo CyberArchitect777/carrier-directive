@@ -81,27 +81,28 @@ class UserInterface():
                 island_selected = self.determine_correct_nearby_island()
                 if island_selected != None:
                     attack_direction = self.determine_attack_direction()
+                    print("Attack direction" + attack_direction)
                     if attack_direction != None:
-                        attack_output = self.player_carrier.launch_attack(island_selected, attack_direction, True)
-                        if attack_output == 0:
+                        craft_status, attack_output = self.player_carrier.launch_attack(island_selected, attack_direction, True)
+                        if craft_status == 0:
                             print("\nThere is no aircraft available for this attack")
-                        elif attack_output == 1:
-                            print("\nThe attack failed and the aircraft has been lost")
+                        elif craft_status == 1:
+                            print("\n" + str(attack_output) + " defenses were destroyed. However, the aircraft was lost")
                         else:
-                            print("\nThe attack succeeded and an island defense has been destroyed")
+                            print("\n" + str(attack_output) + " defenses were destroyed. The aircraft safely returned to the carrier")
             elif command.lower() == "ga":
                 # Launch a ground attack on the island
                 island_selected = self.determine_correct_nearby_island()
                 if island_selected != None:
                     attack_direction = self.determine_attack_direction()
                     if attack_direction != None:
-                        attack_output = self.player_carrier.launch_attack(island_selected, attack_direction, False)
-                        if attack_output == 0:
+                        craft_status, attack_output = self.player_carrier.launch_attack(island_selected, attack_direction, False)
+                        if craft_status == 0:
                             print("\nThere is no hovercraft available for this attack")
-                        elif attack_output == 1:
-                            print("\nThe attack failed and the hovercraft has been lost")
+                        elif craft_status == 1:
+                            print("\n" + str(attack_output) + " defenses were destroyed. However, the hovercraft was lost")
                         else:
-                            print("\nThe attack succeeded and an island defense has been destroyed")
+                            print("\n" + str(attack_output) + " defenses were destroyed. The hovercraft safely returned to the carrier")
             elif command.lower() == "is":
                 # Manage island scouting from the air
                 island_selected = self.determine_correct_nearby_island()

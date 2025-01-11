@@ -88,17 +88,19 @@ class Carrier():
         1 = Attacking craft lost
         2 = Attacking craft succeeded
         """
+        print("Carrier Attack Launched Against Island ID - " + str(island.island_id) + " - " + direction + " - " + str(air_used))
         if (air_used == True and self.aircraft < 1) or (air_used == False and self.hovercraft < 1):
-            return 0
+            return 0, 0
         else:
-            if island.island_attack(direction, air_used) == False:
+            craft_status, features_destroyed = island.island_attack(direction, air_used)
+            if craft_status == False:
                 if (air_used == True):
                     self.aircraft -= 1
                 else:
                     self.hovercraft -=1
-                return 1
+                return 1, features_destroyed
             else:
-                return 2
+                return 2, features_destroyed
 
     def move_carrier(self, direction):
         """
