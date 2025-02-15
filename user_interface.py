@@ -91,7 +91,7 @@ class UserInterface():
                         else:
                             print("\n" + str(attack_output) + " defenses were destroyed. The aircraft safely returned to the carrier\n")
                         if craft_status > 0:
-                            print("Current island status:\n")
+                            print("Current island status:")
                             island_scan = island_selected.return_island_makeup_for_mapping()        
                             self.process_scout_result(2, island_scan, True)
             elif command.lower() == "ga":
