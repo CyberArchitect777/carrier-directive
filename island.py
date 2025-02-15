@@ -139,7 +139,7 @@ class Island():
                     feature_value_found = self.features.return_relative_feature_value_by_coords(x, y, self.xstartlocation, self.ystartlocation)
                     print("Feature value found - " + str(feature_value_found))
                     print("Scanning Square - " + str(x) + " - " + str(y))
-                    if feature_value_found != 1 and feature_value_found != 2 and feature_value_found != 8 and feature_value_found != 9:
+                    if feature_value_found != 1 and feature_value_found != 2 and feature_value_found != 7 and feature_value_found != 8 and feature_value_found != 9:
                         print("Square Attacked" + str(x) + " - " + str(y))
                         outcome = self.square_attacked(x, y, feature_value_found, air_used)
                         if outcome == False:
@@ -152,7 +152,7 @@ class Island():
                     feature_value_found = self.features.return_relative_feature_value_by_coords(x, y, self.xstartlocation, self.ystartlocation)
                     print("Feature value found - " + str(feature_value_found))
                     # Only attack this square if it does not match a given excluded type
-                    if feature_value_found != 1 and feature_value_found != 2 and feature_value_found != 8 and feature_value_found != 9:
+                    if feature_value_found != 1 and feature_value_found != 2 and feature_value_found != 7 and feature_value_found != 8 and feature_value_found != 9:
                         print("Square Attacked" + str(x) + " - " + str(y))
                         outcome = self.square_attacked(x, y, feature_value_found, air_used)
                         if outcome == False:
@@ -170,7 +170,7 @@ class Island():
         risk_of_defeat = 0
         if air_used == True:
             # Laser turret or drone base
-            if feature_number == 3 or feature_number == 6 :
+            if feature_number == 3 or feature_number == 6:
                 risk_of_defeat = 25
             elif feature_number == 4: # Anti-aircraft guns
                 risk_of_defeat = 50
