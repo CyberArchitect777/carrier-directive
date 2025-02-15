@@ -65,7 +65,7 @@ class Island():
             # 7 - Radar systems
             # 8 - Fuel depot
             # 9 - Materials warehouse
-            if (current_feature_number == 0):
+            if current_feature_number == 0:
                 # Makes sure a command center is selected first
                 select_feature = 2
             else:
@@ -79,10 +79,13 @@ class Island():
                             flag = True
                         elif (select_feature > 5):
                             if not self.features.does_feature_type_already_exist(select_feature):
-                                flag = True              
+                                flag = True
             island_coords = self.provide_coords()
             selected_island_location = random.randint(0, len(island_coords)-1)
             selected_xy_coords = island_coords[selected_island_location].split(",")
+            while self.features.return_feature_value_by_coords(selected_xy_coords[0], selected_xy_coords[1]) != 1:
+                selected_island_location = random.randint(0, len(island_coords)-1)
+                selected_xy_coords = island_coords[selected_island_location].split(",")
             self.features.add_feature(selected_xy_coords[0], selected_xy_coords[1], select_feature)
 
     def island_attack(self, direction, air_used):
