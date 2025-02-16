@@ -268,7 +268,7 @@ class UserInterface():
         Provides a user interface scan output for the area around the carrier        
         """
         print("\nCarrier Scan\n")
-        print("Legend: C = Player Carrier, - = Water, I = Island, X = Out of Map Zone\n")
+        print("Legend: C = Player Carrier, - = Water, 0 = Netural Island, 1 - Player Island, 2 - Enemy Island, X = Out of Map Zone\n")
         # Identifies the islands next to the carrier location
         islands_near_carrier = self.player_carrier.get_islands_near_carrier(self.islands_data)
         if len(islands_near_carrier) > 0:
@@ -292,5 +292,11 @@ class UserInterface():
                     elif scanned_map[y][x] == -2:
                         print("E ", end="")
                     else:
-                        print("I ", end="")
+                        detected_island = self.islands_data.return_island_by_id(scanned_map[y][x])
+                        if detected_island.island_owner == 0:
+                            print("0 ", end="")
+                        elif detected_island.island_owner == 1:
+                            print("1 ", end="")
+                        else:
+                            print("2 ", end="")
             print("\n")
