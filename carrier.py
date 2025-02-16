@@ -55,7 +55,7 @@ class Carrier():
         """
         return self.xlocation, self.ylocation
     
-    def launch_island_capture(self):
+    def launch_island_capture(self, island):
         """
         The carrier launches a ground attempt to capture the command base on the island using a hovercraft
         The following return codes might be used:
