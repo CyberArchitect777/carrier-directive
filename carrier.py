@@ -55,6 +55,24 @@ class Carrier():
         """
         return self.xlocation, self.ylocation
     
+    def launch_island_capture(self):
+        """
+        The carrier launches a ground attempt to capture the command base on the island using a hovercraft
+        The following return codes might be used:
+        0 = No hovercraft available for this
+        1 = Hovercraft lost
+        2 = Hovercraft succeeded, island captured.
+        """
+        if self.hovercraft < 1:
+            return 0
+        else:
+            total_ground_defenses = island.return_number_features_by_type(3) + island.return_number_features_by_type(5) + island.return_number_features_by_type(6)
+            if total_ground_defenses > 0:
+                self.hovercraft -= 1
+                return 1
+            else:
+                return 2
+    
     def launch_air_scout(self, island):
         """
         The carrier launches an air scout to an island in order to view the facilities and defenses on it

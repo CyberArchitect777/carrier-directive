@@ -56,6 +56,7 @@ class UserInterface():
                 print("is - Launches an aircraft to scout the nearby island")
                 print("aa - Launches an aircraft attack on the nearby island")
                 print("ga - Launches an hovercraft attack on the nearby island")
+                print("ca - Launches a hovercraft to try and capture the nearby island")
                 print("\nGeneral game commands\n")
                 print("quit - Quits the game")
                 print("\nDebug commands for development:\n")
@@ -76,6 +77,10 @@ class UserInterface():
                 print("Damage: " + str(self.player_carrier.damage) + "\n")
             elif command.lower() == "scan":
                 self.carrier_scan()
+            elif command.lower() == "ca": # Tries to capture a nearby island
+                island_selected = self.determine_correct_nearby_island()
+                if island_selected != None:
+                    print("\nNot yet implemented\n")
             elif command.lower() == "aa":
                 # Launch an air attack on the island
                 island_selected = self.determine_correct_nearby_island()
